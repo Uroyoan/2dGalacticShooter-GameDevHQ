@@ -17,7 +17,7 @@ Note To self is just the programmer talking to himself.
 
 Phase one, Framework:
 
-1#  Thrusters: Not Done
+1#  Thrusters: Commited
     Move the player at an increased rate when the ‘Left Shift’ key is pressed down
     Reset back to normal speed when the ‘LeftShift’ key is released
 
