@@ -7,13 +7,10 @@ public class MainMenu : MonoBehaviour
 {
 	[SerializeField]
 	private GameObject _controlsMenu;
-	private bool _controlMenuBool;
 	[SerializeField]
 	private GameObject _creditsMenu;
-	private bool _creditsMenuBool;
 	[SerializeField]
 	private GameObject _mainMenu;
-	private bool _mainMenuBool;
 	private bool _turnedOff = false;
 	private bool _turnedON = true;
 

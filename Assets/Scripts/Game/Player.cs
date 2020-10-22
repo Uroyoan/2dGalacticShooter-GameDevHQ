@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
   [SerializeField]
   private float _speed = 8f;
+  private float _modifiedSpeed;
   [SerializeField]
   private int _lives = 3;
 
@@ -39,22 +40,26 @@ public class Player : MonoBehaviour
   [SerializeField]
   private float _powerTimer = 5f;
 
+  //For Animation
   private bool _tripleShotActive = false;
 
   [SerializeField]
   private GameObject _shieldVisualizer;
+  //For Animation
   private bool _shieldActive = false;
 
   [SerializeField]
   private GameObject _speedVisualizer;
   [SerializeField]
   private float _speedMultiplier = 2;
+  //For Animation
   private bool _speedActive = false;
   
 
   void Start()
   { // Starting Position
     transform.position = new Vector3(0, -3, 0);
+    _modifiedSpeed = _speed;
     _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
     if (_spawnManager == null)
@@ -87,6 +92,15 @@ public class Player : MonoBehaviour
         PlayerShooting();
         AudioSource.PlayClipAtPoint(_laserClip, transform.position);
       }
+      if (Input.GetKey(KeyCode.LeftShift))
+      {
+        _modifiedSpeed =  _speed * _speedMultiplier;
+      }
+      else
+      {
+        _modifiedSpeed = _speed;
+			}
+
     }
     if (_lives <= 0)
     {
@@ -110,20 +124,19 @@ public class Player : MonoBehaviour
     _shieldVisualizer.SetActive(true);
   }
 
-
   public void SpeedActive()
   {
     AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
     _speedActive = true;
     _speedVisualizer.SetActive(true);
-    _speed *= _speedMultiplier;
+    _modifiedSpeed = _speed * _speedMultiplier;
     StartCoroutine(SpeedPowerdownRoutine());
   }
   IEnumerator SpeedPowerdownRoutine()
   {
     yield return new WaitForSeconds(_powerTimer);
     _speedVisualizer.SetActive(false);
-    _speed /= _speedMultiplier;
+    _modifiedSpeed = _speed;
     _speedActive = false;
   }
 
@@ -185,7 +198,7 @@ public class Player : MonoBehaviour
     }
   }
 
-    public void Damage()
+  public void Damage()
   {
     if (_shieldActive == false)
     {
@@ -245,7 +258,7 @@ public class Player : MonoBehaviour
     float horizontalInput = Input.GetAxis("Horizontal");
     float verticalInput = Input.GetAxis("Vertical");
     Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-    transform.Translate(direction * _speed * Time.deltaTime);
+    transform.Translate(direction * _modifiedSpeed * Time.deltaTime);
     //Debug.Log("Horizontal Input" + horizontalInput);
     if (horizontalInput <= -0.2)
     {
