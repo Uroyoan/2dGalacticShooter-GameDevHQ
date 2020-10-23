@@ -103,18 +103,7 @@ public class Enemy : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-    //Debug.Log("Enemy hit by: " + other.transform.name);
-    if (other.tag == "Player")
-    {
-      if (_player != null)
-      {
-        //_player.DamageCollision();
-        _player.Damage();
-			}
 
-      DeathSequence();
-
-    }
     if (other.tag == "Laser")
     {
       Destroy(other.gameObject);
@@ -122,10 +111,8 @@ public class Enemy : MonoBehaviour
       {
         _player.AddScore(10);
       }
-
-      DeathSequence();
-      
     }
+
     if (other.tag == "EnemyLaser")
     {
       Destroy(other.gameObject);
@@ -133,11 +120,9 @@ public class Enemy : MonoBehaviour
       {
         _player.AddScore(5);
       }
-
-      DeathSequence();
-
     }
+
+    DeathSequence();
+
   }
-
-
 }

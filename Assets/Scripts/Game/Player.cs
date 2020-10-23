@@ -44,9 +44,13 @@ public class Player : MonoBehaviour
   private bool _tripleShotActive = false;
 
   [SerializeField]
+  private int _shieldStrength = 3;
+  [SerializeField]
   private GameObject _shieldVisualizer;
   //For Animation
+  [SerializeField]
   private bool _shieldActive = false;
+  private SpriteRenderer _shieldColor;
 
   [SerializeField]
   private GameObject _speedVisualizer;
@@ -60,8 +64,8 @@ public class Player : MonoBehaviour
   { // Starting Position
     transform.position = new Vector3(0, -3, 0);
     _modifiedSpeed = _speed;
-    _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
+    _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     if (_spawnManager == null)
     {
       Debug.LogError("Player::SPAWN MANAGER IS NULL");
@@ -78,6 +82,13 @@ public class Player : MonoBehaviour
     {
       Debug.LogError("Player::THE ANIMATOR IS NULL");
     }
+
+    _shieldColor = _shieldVisualizer.GetComponent<SpriteRenderer>();
+    if (_shieldColor == null)
+    {
+      Debug.LogError("Player::THE SPRITE RENDERER IS NULL");
+    }
+
   }
 
 
@@ -117,10 +128,12 @@ public class Player : MonoBehaviour
 	}
 
 
-  public void ShieldActive ()
+  public void ShieldActive()
   {
     AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
     _shieldActive = true;
+    _shieldStrength = 3;
+    _shieldColor.material.color = new Color(1f, 1f, 1f, 1f);
     _shieldVisualizer.SetActive(true);
   }
 
@@ -156,87 +169,104 @@ public class Player : MonoBehaviour
 
   public void DamageVisualiser()
   {
-    switch (_lives)
+    if (_shieldActive == false)
     {
-      case 3:
-        break;
+      switch (_lives)
+      {
+        case 3:
+          break;
 
-      case 2:
-        _rightEngineVisualizer.SetActive(true);
-        break;
+        case 2:
+          _rightEngineVisualizer.SetActive(true);
+          break;
 
-      case 1:
-        _rightEngineVisualizer.SetActive(true);
-        _leftEngineVisualizer.SetActive(true);
-        break;
+        case 1:
+          _rightEngineVisualizer.SetActive(true);
+          _leftEngineVisualizer.SetActive(true);
+          break;
 
-      case 0:
-        _leftEngineVisualizer.SetActive(false);
-        _rightEngineVisualizer.SetActive(false);
-        _shieldVisualizer.SetActive(false);
-        _speedVisualizer.SetActive(false);
-        break;
+        case 0:
+          _leftEngineVisualizer.SetActive(false);
+          _rightEngineVisualizer.SetActive(false);
+          _shieldVisualizer.SetActive(false);
+          _speedVisualizer.SetActive(false);
+          break;
 
-      default:
-        break;
+        case -1:
+          _leftEngineVisualizer.SetActive(false);
+          _rightEngineVisualizer.SetActive(false);
+          _shieldVisualizer.SetActive(false);
+          _speedVisualizer.SetActive(false);
+          break;
+
+        default:
+          _anim.SetTrigger("OnPlayerDeath");
+          Debug.Log("Player::DamageVisualizer SwitchCase _lives ERROR");
+          break;
+      }
+    }
+    else
+    {
+
+      switch (_shieldStrength)
+      {
+        case 2:
+          _shieldColor.material.color = new Color(1f, 1f, 0f, 1f);
+          break;
+        case 1:
+          _shieldColor.material.color = new Color(1f, 0f, 0f, 1f);
+          break;
+        case 0:
+          _shieldVisualizer.SetActive(false);
+          _shieldActive = false;
+          break;
+        case -1:
+          _shieldVisualizer.SetActive(false);
+          _shieldActive = false;
+          break;
+        default:
+          Debug.Log("Player::DamageVisualiser SwitchCase _shieldStrength ERROR");
+          _shieldActive = false;
+          _shieldVisualizer.SetActive(false);
+          break;
+      }
     }
   }
 
   public void DamageCollision()
   {
-    if (_shieldActive == false)
+    if (_shieldActive == true)
     {
-      _lives -= 2;
-      _uiManager.UpdateLives(_lives);
       Damage();
     }
     else
     {
-      _shieldActive = false;
-      _shieldVisualizer.SetActive(false);
-      return;
+      _lives--;
+      Damage();
     }
   }
 
   public void Damage()
   {
-    if (_shieldActive == false)
+    if (_shieldActive == true)
     {
+      _shieldStrength--;
+      DamageVisualiser();
+    }
+    else {
       _lives--;
       _uiManager.UpdateLives(_lives);
+      DamageVisualiser();
     }
-    else
+    if (_lives <= 0)
     {
-      _shieldActive = false;
-      _shieldVisualizer.SetActive(false);
-      return;
-		}
-    switch (_lives)
-    {
-      case 3:
-        break;
-      case 2:
-        DamageVisualiser();
-        break;
-      case 1:
-        DamageVisualiser();
-        break;
-      case 0:
-        DamageVisualiser();
-        _death = true;
-        Destroy(GetComponent<Collider2D>());
-        _anim.SetTrigger("OnPlayerDeath");
-        AudioSource.PlayClipAtPoint(_deathClip, transform.position);
-        _spawnManager.OnPlayerDeath();
-        Destroy(this.gameObject, 2.6f);
-
-        break;
-      default:
-        _anim.SetTrigger("OnPlayerDeath");
-        //Debug.Log("Player::Damage Error");
-        break;
-		}
-
+      _death = true;
+      Destroy(GetComponent<Collider2D>());
+      _anim.SetTrigger("OnPlayerDeath");
+      AudioSource.PlayClipAtPoint(_deathClip, transform.position);
+      _spawnManager.OnPlayerDeath();
+      Destroy(this.gameObject, 2.6f);
+    }
 	}
 
 
@@ -305,6 +335,13 @@ public class Player : MonoBehaviour
       Destroy(other.gameObject);
       Damage();
     }
+
+    if (other.tag == "Enemy")
+    {
+      other.gameObject.GetComponent<Enemy>().DeathSequence();
+      DamageCollision();
+    }
+
   }
 
 
