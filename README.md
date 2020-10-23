@@ -21,7 +21,7 @@ Phase one, Framework:
     Move the player at an increased rate when the ‘Left Shift’ key is pressed down
     Reset back to normal speed when the ‘LeftShift’ key is released
 
-2#  Shield Strength: Not Done
+2#  Shield Strength: Commited
     Visualize the strength of the shield. This can be done through UI on screen or color changing of the shield.
     Allow for 3 hits on the shield to accommodate visualization
     Note to self: Change Color to yellow then Red.
