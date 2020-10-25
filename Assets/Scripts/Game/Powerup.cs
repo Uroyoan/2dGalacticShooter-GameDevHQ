@@ -5,7 +5,7 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
 	private float _speed = 3f;
-	[SerializeField] // shield = 0, speed = 1, tripleshot = 2
+	[SerializeField] // shield = 1, speed = 2, tripleshot = 3, ammo = 4,
 	private int _powerUpID;
 
 	private void Update()
@@ -17,25 +17,30 @@ public class Powerup : MonoBehaviour
 		if (other.tag == "Player")
 		{
 			Player player = other.GetComponent<Player>();
-			switch (_powerUpID)
+			switch (_powerUpID + 1)
 			{
-				case 0:
+				case 1:
 					player.ShieldActive();
 					//Debug.Log("Shield collected by:" + other.tag);
 					break;
 
-				case 1:
+				case 2:
 					player.SpeedActive();
 					//Debug.Log("Speed collected by:" + other.tag);
 					break;
 
-				case 2:
+				case 3:
 					player.TripleShotActive();
 					//Debug.Log("TripleShot collected by:" + other.tag);
 					break;
 
+				case 4:
+					player.AddAmmo();
+					//Debug.Log("Ammo collected by:" + other.tag);
+					break;
+
 				default:
-					Debug.Log("Powerup Collider// Unidentified SwitchCase");
+					Debug.Log("Powerup::OnTrigger Unidentified SwitchCase");
 					break;
 
 			}

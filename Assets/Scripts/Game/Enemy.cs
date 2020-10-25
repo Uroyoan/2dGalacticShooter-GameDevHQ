@@ -110,6 +110,7 @@ public class Enemy : MonoBehaviour
       if (_player != null)
       {
         _player.AddScore(10);
+        DeathSequence();
       }
     }
 
@@ -119,10 +120,8 @@ public class Enemy : MonoBehaviour
       if (_player != null)
       {
         _player.AddScore(5);
+        DeathSequence();
       }
     }
-
-    DeathSequence();
-
   }
 }

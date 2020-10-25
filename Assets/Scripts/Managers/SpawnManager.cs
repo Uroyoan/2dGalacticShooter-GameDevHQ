@@ -51,7 +51,7 @@ public class SpawnManager : MonoBehaviour
 		{
 			
 			Vector3 spawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-			int PowerSelect = Random.Range(0, 3);
+			int PowerSelect = Random.Range(0, 4);
 			GameObject newPowerup = Instantiate(_powerupPrefabs[PowerSelect], spawnPos, Quaternion.identity);
 
 			newPowerup.transform.parent = _enemyContainer.transform;

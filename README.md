@@ -31,7 +31,7 @@ Phase one, Framework:
     When the player is out of ammo, provide feedback through on-screen elements or sound effects.(ie:beep or ammo count displayed on screen)
       Note to self: Reverse the PowerUp Clip
 
-4#  Ammo Collectable: Not Done
+4#  Ammo Collectable: Commited
     Create a powerup that refills the ammo count allowing the player to fire again
       Note to self: Sprite This somehow
 

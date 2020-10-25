@@ -132,6 +132,7 @@ public class Player : MonoBehaviour
 	}
 
 
+
   public void ShieldActive()
   {
     AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
@@ -170,6 +171,12 @@ public class Player : MonoBehaviour
     _tripleShotActive = false;
 	}
 
+  public void AddAmmo()
+  {
+    AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
+    _ammoCount += 10;
+    _uiManager.UpdateAmmo(_ammoCount);
+  }
 
   public void DamageVisualiser()
   {
