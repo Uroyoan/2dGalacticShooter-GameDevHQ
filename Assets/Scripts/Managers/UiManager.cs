@@ -15,7 +15,11 @@ public class UiManager : MonoBehaviour
   private Text _gameOverText;
   [SerializeField]
   private Text _restartText;
+  [SerializeField]
+  private Text _ammoText;
+
   private GameManager _gameManager;
+
 
   void Start()
   {
@@ -29,11 +33,18 @@ public class UiManager : MonoBehaviour
       Debug.Log("GameManager is NULL");
 		}
   }
+  public void UpdateAmmo(int playerAmmo)
+  {
+    _ammoText.text = "Ammo: " + playerAmmo;
+  }
+
 
   public void UpdateScore(int playerScore)
   {
     _scoreText.text = "Score: " + playerScore;
 	}
+
+
   public void UpdateLives(int currentLives)
   { 
     if (currentLives <= 0)
@@ -46,6 +57,8 @@ public class UiManager : MonoBehaviour
       _livesImg.sprite = _livesSprite[currentLives];
     }
 	}
+
+
   IEnumerator GameOverFlickerRoutine()
   {
     while(true)
@@ -56,6 +69,7 @@ public class UiManager : MonoBehaviour
       yield return new WaitForSeconds(1f);
 		}
 	}
+
   void GameoverSequence()
   {
     _gameManager.Gameover();
@@ -64,4 +78,6 @@ public class UiManager : MonoBehaviour
     _restartText.text = "Press F to Pay Respects";
     StartCoroutine(GameOverFlickerRoutine());
   }
+
+
 }

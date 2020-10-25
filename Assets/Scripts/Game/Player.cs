@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
   private AudioClip _laserClip;
   [SerializeField]
   private AudioClip _powerupClip;
+  [SerializeField]
+  private AudioClip _noAmmoClip;
 
   [SerializeField]
   private GameObject _laserPrefab;
@@ -25,6 +27,8 @@ public class Player : MonoBehaviour
   [SerializeField]
   private float _fireRate = 0.2f;
   private float _canFire = 0f;
+  [SerializeField]
+  private int _ammoCount = 15;
 
   private UiManager _uiManager;
   [SerializeField]
@@ -101,8 +105,8 @@ public class Player : MonoBehaviour
       {
         _canFire = Time.time + _fireRate;
         PlayerShooting();
-        AudioSource.PlayClipAtPoint(_laserClip, transform.position);
       }
+
       if (Input.GetKey(KeyCode.LeftShift))
       {
         _modifiedSpeed =  _speed * _speedMultiplier;
@@ -270,14 +274,26 @@ public class Player : MonoBehaviour
 	}
 
 
-  void PlayerShooting ()
+  void PlayerShooting()
   {
-    if (_tripleShotActive == true) {
-      Instantiate( _tripleShotPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+    if (_ammoCount > 0)
+    {
+      if (_tripleShotActive == true)
+      {
+        Instantiate(_tripleShotPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+      }
+      else
+      {
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
+      }
+      AudioSource.PlayClipAtPoint(_laserClip, transform.position);
+      _ammoCount--;
+      _uiManager.UpdateAmmo(_ammoCount);
+
     }
     else
     {
-      Instantiate( _laserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
+      AudioSource.PlayClipAtPoint(_noAmmoClip, transform.position);
     }
   }
 
