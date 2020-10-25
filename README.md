@@ -26,7 +26,7 @@ Phase one, Framework:
     Allow for 3 hits on the shield to accommodate visualization
     Note to self: Change Color to yellow then Red.
 
-3#  Ammo Count: Not Done
+3#  Ammo Count: Commited
     Limit the lasers fired by the player to only 15 shots.
     When the player is out of ammo, provide feedback through on-screen elements or sound effects.(ie:beep or ammo count displayed on screen)
       Note to self: Reverse the PowerUp Clip
