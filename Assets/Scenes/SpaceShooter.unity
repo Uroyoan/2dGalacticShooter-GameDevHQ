@@ -160,6 +160,7 @@ MonoBehaviour:
   - {fileID: 8905781224566165688, guid: fb9e11366f2ec68479c50f2c0382188f, type: 3}
   - {fileID: 3443314559840111872, guid: cccd8cd533927f34ea1e27a957327fda, type: 3}
   - {fileID: 6967553324940208022, guid: dc5e1295b63c0f04f9c5109d3f28ff87, type: 3}
+  - {fileID: 2775634286316501504, guid: 49a6a42289444f844afeef7c69c40968, type: 3}
   _powerupSpawnRate: 10
   _powerupContainer: {fileID: 648862252}
 --- !u!4 &27042993

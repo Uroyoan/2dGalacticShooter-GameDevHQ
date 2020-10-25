@@ -17,25 +17,30 @@ public class Powerup : MonoBehaviour
 		if (other.tag == "Player")
 		{
 			Player player = other.GetComponent<Player>();
-			switch (_powerUpID + 1)
+			switch (_powerUpID)
 			{
-				case 1:
+				case 0:
 					player.ShieldActive();
 					//Debug.Log("Shield collected by:" + other.tag);
 					break;
 
-				case 2:
+				case 1:
 					player.SpeedActive();
 					//Debug.Log("Speed collected by:" + other.tag);
 					break;
 
-				case 3:
+				case 2:
 					player.TripleShotActive();
 					//Debug.Log("TripleShot collected by:" + other.tag);
 					break;
 
-				case 4:
+				case 3:
 					player.AddAmmo();
+					//Debug.Log("Ammo collected by:" + other.tag);
+					break;
+
+				case 4:
+					player.AddHealth();
 					//Debug.Log("Ammo collected by:" + other.tag);
 					break;
 

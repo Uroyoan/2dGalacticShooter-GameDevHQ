@@ -35,7 +35,7 @@ Phase one, Framework:
     Create a powerup that refills the ammo count allowing the player to fire again
       Note to self: Sprite This somehow
 
-5#  Health Collectable: Not Done
+5#  Health Collectable: Commited
     Create a health collectable that heals the player by 1. Update the visuals of the Player to reflect this.
     Note to self: Add Another set of 3 lives UI to display up to 6 lives.
     
