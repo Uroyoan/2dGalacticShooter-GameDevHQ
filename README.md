@@ -51,7 +51,7 @@ Phase one, Framework:
     Cool Down System required.
     Note to self: A green bar that holds a max of 5 seconds of thrusters.
     
-8#  Camera Shake: Not Done
+8#  Camera Shake: Commited
     When the player takes damage, provide a subtle camera shake.
 
 

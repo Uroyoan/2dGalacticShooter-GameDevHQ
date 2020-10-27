@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
 	private GameObject _rightEngineVisualizer;
 	private Animator _anim;
 	private bool _death = false;
+	[SerializeField]
+	private CameraShake _cameraShake;
 
 	private SpawnManager _spawnManager;
 	[SerializeField]
@@ -101,7 +103,6 @@ public class Player : MonoBehaviour
 		{
 			Debug.LogError("Player::THE SPRITE RENDERER IS NULL");
 		}
-
 	}
 
 
@@ -216,7 +217,10 @@ public class Player : MonoBehaviour
 		_uiManager.UpdateLives(_lives);
 	}
 
-
+	private void CameraShaking()
+	{
+		StartCoroutine(_cameraShake.Shake());
+	}
 	public void DamageVisualiser()
 	{
 		switch (_lives)
@@ -279,6 +283,7 @@ public class Player : MonoBehaviour
 				_shieldVisualizer.SetActive(false);
 				break;
 		}
+		CameraShaking();
 	}
 	public void DamageCollision()
 	{
