@@ -92,11 +92,11 @@ public class Enemy : MonoBehaviour
 
   public void DeathSequence()
   {
+    transform.parent = null;
     _death = true;
     _anim.SetTrigger("OnEnemyDeath");
     _enemySounds.Play();
     Destroy(GetComponent<Collider2D>());
-
     Destroy(this.gameObject, 2.6f);
 	}
 
@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 
-    if (other.tag == "Laser")
+    if (other.tag == "Laser" || other.tag == "Missile")
     {
       Destroy(other.gameObject);
       if (_player != null)

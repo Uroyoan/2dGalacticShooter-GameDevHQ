@@ -11,9 +11,9 @@ public class Asteroid : MonoBehaviour
   private AudioSource _asteroidSounds;
 
 
-	private void Start()
-	{
-    transform.position = new Vector3(0,5,0);
+  private void Start()
+  {
+    transform.position = new Vector3(0, 5, 0);
 
     _anim = gameObject.GetComponent<Animator>();
     if (_anim == null)
@@ -43,8 +43,8 @@ public class Asteroid : MonoBehaviour
 
   private void CalculateMovement()
   {
-    transform.Rotate(0f,0f,1f * _rotation * Time.deltaTime);
-	}
+    transform.Rotate(0f, 0f, 1f * _rotation * Time.deltaTime);
+  }
 
 
   public void AsteroidDestroyed()
@@ -59,7 +59,7 @@ public class Asteroid : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D other)
   {
-    if (other.tag == "Laser")
+    if (other.tag == "Laser" || other.tag == "Missile")
     {
       Destroy(other.gameObject);
       AsteroidDestroyed();

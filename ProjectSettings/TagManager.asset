@@ -11,6 +11,7 @@ TagManager:
   - Shield
   - Undefined
   - Powerup
+  - Missile
   layers:
   - Default
   - TransparentFX

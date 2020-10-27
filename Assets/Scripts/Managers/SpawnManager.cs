@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
 	private float _powerupSpawnRate = 10f;
 	[SerializeField]
 	private GameObject _powerupContainer;
-
+	private int _powerSelected;
 	private bool _stopSpawning = false;
 
 	public void startSpawn()
@@ -29,6 +29,7 @@ public class SpawnManager : MonoBehaviour
 	{
 		_stopSpawning = true;
 	}
+
 
 	IEnumerator SpawnEnemyRoutine ()
 	{
@@ -43,19 +44,38 @@ public class SpawnManager : MonoBehaviour
 			yield return new WaitForSeconds(_enemySpawnRate);
 		}
 	}
+
 	IEnumerator SpawnPowerupRoutine ()
 	{
 		yield return new WaitForSeconds(4f);
 
 		while (_stopSpawning == false)
 		{
-			
+			SelectPowerup(Random.Range(1, 101));
 			Vector3 spawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-			int PowerSelect = Random.Range(0, 5);
-			GameObject newPowerup = Instantiate(_powerupPrefabs[PowerSelect], spawnPos, Quaternion.identity);
+			GameObject newPowerup = Instantiate(_powerupPrefabs[_powerSelected], spawnPos, Quaternion.identity);
 
-			newPowerup.transform.parent = _enemyContainer.transform;
+			newPowerup.transform.parent = _powerupContainer.transform;
 			yield return new WaitForSeconds(Random.Range(_powerupSpawnRate - 3, _powerupSpawnRate));
 		}
 	}
+
+
+	private void SelectPowerup(int powerRandomizer)
+	{
+		switch(powerRandomizer)
+		{
+			case int _powerRarity when (_powerRarity > 10):
+				_powerSelected = Random.Range(0, 5);
+				break;
+			case int _powerRarity when (_powerRarity <= 10):
+				_powerSelected = 5;
+				break;
+			default:
+				Debug.Log("SpawnManager::SelectPowerup ERROR");
+				break;
+		}
+
+	}
+
 }

@@ -19,11 +19,15 @@ public class Player : MonoBehaviour
 	private AudioClip _powerupClip;
 	[SerializeField]
 	private AudioClip _noAmmoClip;
+	[SerializeField]
+	private AudioClip _missileClip;
 
 	[SerializeField]
 	private GameObject _laserPrefab;
 	[SerializeField]
 	private GameObject _tripleShotPrefab;
+	[SerializeField]
+	private GameObject _MissilePrefab;
 	[SerializeField]
 	private float _fireRate = 0.2f;
 	private float _canFire = 0f;
@@ -44,8 +48,8 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	private float _powerTimer = 5f;
 
-	//For Animation
 	private bool _tripleShotActive = false;
+	private bool _missileActive = false;
 
 	[SerializeField]
 	private int _shieldStrength = 3;
@@ -162,6 +166,8 @@ public class Player : MonoBehaviour
 	{
 		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
 		_tripleShotActive = true;
+		_missileActive = false;
+
 		StartCoroutine(TripleShotPowerdownRoutine());
 	}
 	IEnumerator TripleShotPowerdownRoutine()
@@ -169,6 +175,22 @@ public class Player : MonoBehaviour
 		yield return new WaitForSeconds(_powerTimer);
 		_tripleShotActive = false;
 	}
+
+
+	public void MissileActive()
+	{
+		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
+		_missileActive = true;
+		_tripleShotActive = false;
+
+		StartCoroutine(MissilePowerdownRoutine());
+	}
+	IEnumerator MissilePowerdownRoutine()
+	{
+		yield return new WaitForSeconds(_powerTimer);
+		_missileActive = false;
+	}
+
 
 	public void AddAmmo()
 	{
@@ -252,7 +274,6 @@ public class Player : MonoBehaviour
 				break;
 		}
 	}
-
 	public void DamageCollision()
 	{
 		if (_shieldActive == true)
@@ -265,7 +286,6 @@ public class Player : MonoBehaviour
 			Damage();
 		}
 	}
-
 	public void Damage()
 	{
 		if (_shieldActive == true)
@@ -295,15 +315,22 @@ public class Player : MonoBehaviour
 	{
 		if (_ammoCount > 0)
 		{
-			if (_tripleShotActive == true)
+			if (_tripleShotActive == true && _missileActive == false)
 			{
 				Instantiate(_tripleShotPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+				AudioSource.PlayClipAtPoint(_laserClip, transform.position);
+			}
+			if (_tripleShotActive == false && _missileActive == true)
+			{
+				Instantiate(_MissilePrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+				AudioSource.PlayClipAtPoint(_missileClip, transform.position);
 			}
 			else
 			{
 				Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
+				AudioSource.PlayClipAtPoint(_laserClip, transform.position);
 			}
-			AudioSource.PlayClipAtPoint(_laserClip, transform.position);
+
 			_ammoCount--;
 			_uiManager.UpdateAmmo(_ammoCount);
 

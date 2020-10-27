@@ -41,6 +41,11 @@ public class Powerup : MonoBehaviour
 
 				case 4:
 					player.AddHealth();
+					//Debug.Log("Health collected by:" + other.tag);
+					break;
+
+				case 5:
+					player.MissileActive();
 					//Debug.Log("Ammo collected by:" + other.tag);
 					break;
 
