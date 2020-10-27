@@ -16,7 +16,6 @@ public class Laser : MonoBehaviour
 
 	void CalculateLaserMovement()
   {
-    // Movement
     if (tag == "Laser")
     {
       transform.Translate(new Vector3( 0, 1f, 0) * _speed * Time.deltaTime);

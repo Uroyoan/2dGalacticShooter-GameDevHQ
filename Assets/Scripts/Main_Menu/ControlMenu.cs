@@ -30,7 +30,7 @@ public class ControlMenu : MonoBehaviour
     _laser.transform.Translate( direction * Time.deltaTime);
     _laserBoundry = _laserVisual.localPosition.y;
 
-    if (_laserBoundry >= 150)
+    if (_laserBoundry >= 90)
     {
       _laserVisual.transform.localPosition = new Vector3 (0, 45, 0);
 		}

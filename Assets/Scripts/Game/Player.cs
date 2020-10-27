@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
 	private int _shieldStrength = 3;
 	[SerializeField]
 	private GameObject _shieldVisualizer;
-	//For Animation
+
 	[SerializeField]
 	private bool _shieldActive = false;
 	private SpriteRenderer _shieldColor;
@@ -71,12 +71,12 @@ public class Player : MonoBehaviour
 	private GameObject _speedVisualizer;
 	[SerializeField]
 	private float _speedMultiplier = 2;
-	//For Animation
+
 	private bool _speedActive = false;
 
 
 	void Start()
-	{ // Starting Position
+	{ 
 		transform.position = new Vector3(0, -3, 0);
 		_modifiedSpeed = _speed;
 
@@ -355,25 +355,25 @@ public class Player : MonoBehaviour
 
 	void CalculatePlayerMovement()
 	{
-		// Basic Movement
+
 		float horizontalInput = Input.GetAxis("Horizontal");
 		float verticalInput = Input.GetAxis("Vertical");
 		Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 		transform.Translate(direction * _modifiedSpeed * Time.deltaTime);
-		//Debug.Log("Horizontal Input" + horizontalInput);
+
 		if (horizontalInput <= -0.2)
 		{
 			_anim.SetBool("OnPlayerStill", false);
 			_anim.SetFloat("OnPlayerRight", 0);
 			_anim.SetFloat("OnPlayerLeft", horizontalInput);
-			//_anim.SetTrigger("OnPlayerLeftMax");
+
 		}
 		if (horizontalInput >= 0.2)
 		{
 			_anim.SetBool("OnPlayerStill", false);
 			_anim.SetFloat("OnPlayerLeft", 0);
 			_anim.SetFloat("OnPlayerRight", horizontalInput);
-			//_anim.SetTrigger("OnPlayerRightMax");
+
 
 		}
 		if (horizontalInput == Mathf.Clamp(horizontalInput, -0.19f, 0.19f))

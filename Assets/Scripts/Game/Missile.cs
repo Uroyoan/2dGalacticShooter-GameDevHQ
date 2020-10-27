@@ -10,17 +10,14 @@ public class Missile : MonoBehaviour
   private Transform _enemyShip;
   Vector3 rightTriangle;
   private float _xValueofShip;
-  //private float _xValueofShipSq;
   private float _yValueofShip;
-  //private float _yValueofShipSq;
-  //private float _hipotenusaofShip;
   private float _tangente;
   private float _radianes;
   private float _angulo;
 
   private void Start()
 	{
-    _enemyShip = GameObject.Find("EnemyContainer").transform.GetChild(0);//this.gameObject.transform.GetChild(0);
+    _enemyShip = GameObject.Find("EnemyContainer").transform.GetChild(0);
     if (_enemyShip == null)
     {
       Debug.LogError("Missile::_enemyShip IS NULL");
@@ -39,16 +36,9 @@ public class Missile : MonoBehaviour
     rightTriangle = ship - transform.position;
     _xValueofShip = rightTriangle.x;
     _yValueofShip = rightTriangle.y;
-    /* For testing
-    _xValueofShipSq = (float)Math.Pow( _xValueofShip, 2);
-    _yValueofShipSq = (float)Math.Pow( _yValueofShip, 2);
-    _hipotenusaofShip = (float)Math.Sqrt(_xValueofShipSq + _yValueofShipSq);
-    Debug.Log(_hipotenusaofShip); */
-
     _tangente = (float)Math.Atan2(_yValueofShip, _xValueofShip);
     _radianes = _tangente;
     _angulo = _radianes * (180/3.1415f);
-    //Debug.Log(_angulo);
   }
 
 

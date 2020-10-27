@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
 	}
 	public void Gameover()
 	{
-		//Debug.Log("GameManager::Gameover() Called...");
 		_gameover = true;
 	}
 

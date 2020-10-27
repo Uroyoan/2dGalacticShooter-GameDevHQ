@@ -5,7 +5,7 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
 	private float _speed = 3f;
-	[SerializeField] // shield = 1, speed = 2, tripleshot = 3, ammo = 4,
+	[SerializeField] // shield = 1, speed = 2, tripleshot = 3, ammo = 4, Missile = 5
 	private int _powerUpID;
 
 	private void Update()
@@ -21,32 +21,26 @@ public class Powerup : MonoBehaviour
 			{
 				case 0:
 					player.ShieldActive();
-					//Debug.Log("Shield collected by:" + other.tag);
 					break;
 
 				case 1:
 					player.AddFuel();
-					//Debug.Log("Speed collected by:" + other.tag);
 					break;
 
 				case 2:
 					player.TripleShotActive();
-					//Debug.Log("TripleShot collected by:" + other.tag);
 					break;
 
 				case 3:
 					player.AddAmmo();
-					//Debug.Log("Ammo collected by:" + other.tag);
 					break;
 
 				case 4:
 					player.AddHealth();
-					//Debug.Log("Health collected by:" + other.tag);
 					break;
 
 				case 5:
 					player.MissileActive();
-					//Debug.Log("Ammo collected by:" + other.tag);
 					break;
 
 				default:
@@ -61,6 +55,7 @@ public class Powerup : MonoBehaviour
 	{
 		Vector3 direction = new Vector3 (0,-1,0);
 		transform.Translate(direction * _speed * Time.deltaTime);
+
 		// Boundries X
 		transform.position = new Vector3(Mathf.Clamp(transform.position.x, -11.1f, 10.3f), transform.position.y, 0);
 		// Boundries Y
