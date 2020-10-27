@@ -25,7 +25,7 @@ public class Powerup : MonoBehaviour
 					break;
 
 				case 1:
-					player.SpeedActive();
+					player.AddFuel();
 					//Debug.Log("Speed collected by:" + other.tag);
 					break;
 

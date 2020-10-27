@@ -10,6 +10,8 @@ public class UiManager : MonoBehaviour
   [SerializeField]
   private Image _livesImg;
   [SerializeField]
+  private Image _thrusterBarImg;
+  [SerializeField]
   private Sprite[] _livesSprite;
   [SerializeField]
   private Text _gameOverText;
@@ -33,6 +35,13 @@ public class UiManager : MonoBehaviour
       Debug.Log("GameManager is NULL");
 		}
   }
+  
+  public void UpdateThrusters(float ThrusterFuel)
+  {
+    _thrusterBarImg.fillAmount = ThrusterFuel;
+	}
+
+
   public void UpdateAmmo(int playerAmmo)
   {
     _ammoText.text = "Ammo: " + playerAmmo;

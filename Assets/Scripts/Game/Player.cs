@@ -10,6 +10,11 @@ public class Player : MonoBehaviour
 	private float _modifiedSpeed;
 	[SerializeField]
 	private int _lives = 3;
+	[SerializeField]
+	private float _fuel = 100;
+	private float _fuelUI = 1;
+	[SerializeField]
+	private float _fuelBurnTime = 5;
 
 	[SerializeField]
 	private AudioClip _deathClip;
@@ -105,21 +110,13 @@ public class Player : MonoBehaviour
 		if (_death == false)
 		{
 			CalculatePlayerMovement();
+			Thrusters();
+
 			if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
 			{
 				_canFire = Time.time + _fireRate;
 				PlayerShooting();
 			}
-
-			if (Input.GetKey(KeyCode.LeftShift))
-			{
-				_modifiedSpeed = _speed * _speedMultiplier;
-			}
-			else
-			{
-				_modifiedSpeed = _speed;
-			}
-
 		}
 		if (_lives <= 0)
 		{
@@ -145,20 +142,27 @@ public class Player : MonoBehaviour
 		_shieldVisualizer.SetActive(true);
 	}
 
-	public void SpeedActive()
+	public void AddFuel()
 	{
-		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
-		_speedActive = true;
-		_speedVisualizer.SetActive(true);
-		_modifiedSpeed = _speed * _speedMultiplier;
-		StartCoroutine(SpeedPowerdownRoutine());
+		_fuel = 100;
+		_fuelUI = _fuel / 100;
+		_uiManager.UpdateThrusters(_fuelUI);
 	}
-	IEnumerator SpeedPowerdownRoutine()
+	private void Thrusters()
 	{
-		yield return new WaitForSeconds(_powerTimer);
-		_speedVisualizer.SetActive(false);
-		_modifiedSpeed = _speed;
-		_speedActive = false;
+		if (Input.GetKey(KeyCode.LeftShift) && _fuel > 0)
+		{
+			_modifiedSpeed = _speed * _speedMultiplier;
+			_fuel -= (_fuelBurnTime * 5) * Time.deltaTime;
+			_speedVisualizer.SetActive(true);
+		}
+		else
+		{
+			_modifiedSpeed = _speed;
+			_speedVisualizer.SetActive(false);
+		}
+		_fuelUI = _fuel / 100;
+		_uiManager.UpdateThrusters(_fuelUI);
 	}
 
 
@@ -253,6 +257,8 @@ public class Player : MonoBehaviour
 		}
 		switch (_shieldStrength)
 		{
+			case 3:
+				break;
 			case 2:
 				_shieldColor.material.color = new Color(1f, 1f, 0f, 1f);
 				break;

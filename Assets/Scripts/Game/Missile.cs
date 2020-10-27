@@ -21,6 +21,10 @@ public class Missile : MonoBehaviour
   private void Start()
 	{
     _enemyShip = GameObject.Find("EnemyContainer").transform.GetChild(0);//this.gameObject.transform.GetChild(0);
+    if (_enemyShip == null)
+    {
+      Debug.LogError("Missile::_enemyShip IS NULL");
+    }
   }
 
 	private void Update()
