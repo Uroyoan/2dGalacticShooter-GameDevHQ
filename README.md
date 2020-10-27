@@ -39,7 +39,7 @@ Phase one, Framework:
     Create a health collectable that heals the player by 1. Update the visuals of the Player to reflect this.
     Note to self: Add Another set of 3 lives UI to display up to 6 lives.
     
-6#  Secondary Fire Powerup: Not Done
+6#  Secondary Fire Powerup: Commited
     Create a new form of projectile. You should already have a tripleshot. Include something new from multi direction shot, to heat seeking shots, etc.
     Replaces the standard fire for 5 seconds.
     Spawns rarely
