@@ -46,7 +46,7 @@ Phase one, Framework:
     Note to self: Create Heat Seaking Shots, sounds more Fun. Maybe they got a slow rotation?
       Also add a laser that covers everything on front of player.
     
-7#  Thruster: Scaling Bar HUD: Not Done
+7#  Thruster: Scaling Bar HUD: Commited
     Create a UI element to visualize the charge element of your thrusters.
     Cool Down System required.
     Note to self: A green bar that holds a max of 5 seconds of thrusters.
