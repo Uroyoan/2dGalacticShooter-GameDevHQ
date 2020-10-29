@@ -19,6 +19,8 @@ public class UiManager : MonoBehaviour
   private Text _restartText;
   [SerializeField]
   private Text _ammoText;
+  [SerializeField]
+  private Image _ammoClipBarImg;
 
   private GameManager _gameManager;
 
@@ -41,10 +43,13 @@ public class UiManager : MonoBehaviour
     _thrusterBarImg.fillAmount = ThrusterFuel;
 	}
 
-
+  public void UpdateClip(float playerClip)
+  {
+    _ammoClipBarImg.fillAmount = playerClip;
+  }
   public void UpdateAmmo(int playerAmmo)
   {
-    _ammoText.text = "Ammo: " + playerAmmo;
+    _ammoText.text = "" + playerAmmo;
   }
 
 

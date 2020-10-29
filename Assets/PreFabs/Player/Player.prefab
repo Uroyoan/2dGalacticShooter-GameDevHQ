@@ -513,6 +513,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 8
   _lives: 3
+  _fuel: 100
+  _fuelBurnTime: 5
   _deathClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _laserClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _powerupClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
@@ -526,6 +528,7 @@ MonoBehaviour:
   _score: 0
   _leftEngineVisualizer: {fileID: 3391950255971527532}
   _rightEngineVisualizer: {fileID: 3391950256392264926}
+  _cameraShake: {fileID: 0}
   _powerTimer: 5
   _shieldStrength: 3
   _shieldVisualizer: {fileID: 3391950256585428636}

@@ -49,30 +49,26 @@ public class Missile : MonoBehaviour
   private void CalculateMovement ()
 	{
     transform.Translate(new Vector3(0, 1f, 0) * _speed * Time.deltaTime);
-
-      if (_enemyShip.tag != "Destroyed")
-      {
-        LockedOn();
-      }
+    LockedOn();
 
     // Boundries y
-    if (transform.position.y >= 8.5f)
+    if (transform.position.y > 8.5f)
     {
       Destroy(this.gameObject);
     }
-    else if (transform.position.y <= -6.5f)
+    else if (transform.position.y < -6.5f)
     {
       Destroy(this.gameObject);
     }
 
     // Boundries X
-    if (transform.position.x >= 11.5f)
+    if (transform.position.x > 11.5f)
     {
-      transform.position = new Vector3(-10.5f, transform.position.y, 0);
+      Destroy(this.gameObject);
     }
-    else if (transform.position.x <= -11.5f)
+    else if (transform.position.x < -11.5f)
     {
-      transform.position = new Vector3(10.5f, transform.position.y, 0);
+      Destroy(this.gameObject);
     }
   }
 }

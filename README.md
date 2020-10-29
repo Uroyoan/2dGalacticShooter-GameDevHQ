@@ -60,7 +60,7 @@ Phase Two, Core Programming:
 1#  New Enemy Movement: Commited
     Enable the Enemies to move in a new way, either from side to side, circling, or coming into the play field at an angle.
     
-2#  Player Ammo: Not Done
+2#  Player Ammo: Commited
     Visualize on screen the ammo count of the player in the form of current/max.
     
 3#  Wave System: Not Done

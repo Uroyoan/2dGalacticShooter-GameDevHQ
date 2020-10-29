@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
 	private int _lives = 3;
 	[SerializeField]
 	private float _fuel = 100;
-	private float _fuelUI = 1;
 	[SerializeField]
 	private float _fuelBurnTime = 5;
 
@@ -37,7 +36,10 @@ public class Player : MonoBehaviour
 	private float _fireRate = 0.2f;
 	private float _canFire = 0f;
 	[SerializeField]
-	private int _ammoCount = 15;
+	private int _ammoMagazine = 5;
+	[SerializeField]
+	private float _ammoClip = 1;
+
 
 	private UiManager _uiManager;
 	[SerializeField]
@@ -78,8 +80,6 @@ public class Player : MonoBehaviour
 
 	void Start()
 	{ 
-		transform.position = new Vector3(0, -3, 0);
-		_modifiedSpeed = _speed;
 
 		_spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 		if (_spawnManager == null)
@@ -104,6 +104,12 @@ public class Player : MonoBehaviour
 		{
 			Debug.LogError("Player::THE SPRITE RENDERER IS NULL");
 		}
+
+		_uiManager.UpdateAmmo(_ammoMagazine);
+		_uiManager.UpdateClip(_ammoClip / 4);
+		transform.position = new Vector3(0, -3, 0);
+		_modifiedSpeed = _speed;
+
 	}
 
 
@@ -147,9 +153,9 @@ public class Player : MonoBehaviour
 
 	public void AddFuel()
 	{
+		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
 		_fuel = 100;
-		_fuelUI = _fuel / 100;
-		_uiManager.UpdateThrusters(_fuelUI);
+		_uiManager.UpdateThrusters(_fuel / 100);
 	}
 	private void Thrusters()
 	{
@@ -164,8 +170,7 @@ public class Player : MonoBehaviour
 			_modifiedSpeed = _speed;
 			_speedVisualizer.SetActive(false);
 		}
-		_fuelUI = _fuel / 100;
-		_uiManager.UpdateThrusters(_fuelUI);
+		_uiManager.UpdateThrusters(_fuel / 100);
 	}
 
 
@@ -202,11 +207,17 @@ public class Player : MonoBehaviour
 	public void AddAmmo()
 	{
 		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
-		_ammoCount += 10;
-		_uiManager.UpdateAmmo(_ammoCount);
+		if (_ammoClip <= 3)
+		{
+			_ammoClip++;
+			_uiManager.UpdateClip(_ammoClip / 4);
+		}
+		else 
+		{
+			_ammoMagazine = 10;
+			_uiManager.UpdateAmmo(_ammoMagazine);
+		}
 	}
-
-
 	public void AddHealth()
 	{
 		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
@@ -332,7 +343,7 @@ public class Player : MonoBehaviour
 
 	void PlayerShooting()
 	{
-		if (_ammoCount > 0)
+		if (_ammoMagazine > 0)
 		{
 			if (_tripleShotActive == true && _missileActive == false)
 			{
@@ -349,16 +360,20 @@ public class Player : MonoBehaviour
 				Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
 				AudioSource.PlayClipAtPoint(_laserClip, transform.position);
 			}
+			_ammoMagazine--;
 
-			_ammoCount--;
-			_uiManager.UpdateAmmo(_ammoCount);
-
+		}
+		else if (_ammoMagazine <= 0 && _ammoClip > 0)
+		{
+			_ammoMagazine = 10;
+			_ammoClip--;
 		}
 		else
 		{
 			AudioSource.PlayClipAtPoint(_noAmmoClip, transform.position);
 		}
-
+		_uiManager.UpdateAmmo(_ammoMagazine);
+		_uiManager.UpdateClip(_ammoClip / 4);
 	}
 
 

@@ -78,13 +78,13 @@ public class Enemy : MonoBehaviour
     transform.Translate(_direction * _speed * Time.deltaTime);
 
     // Boundries X
-    if (transform.position.x >= 10f && _death == false)
+    if (transform.position.x >= 11f && _death == false)
     {
       transform.position = new Vector3(-11f, Random.Range( -5f, 6f), 0);
 		}
     else if (transform.position.x <= -11f && _death == false)
     {
-      transform.position = new Vector3(10f, Random.Range(-5f, 6f), 0);
+      transform.position = new Vector3(11f, Random.Range(-5f, 6f), 0);
     }
 
     // Boundries Y
@@ -102,7 +102,6 @@ public class Enemy : MonoBehaviour
 
   public void DeathSequence()
   {
-    gameObject.tag = "Destroyed";
     transform.parent = null;
     _death = true;
     _anim.SetTrigger("OnEnemyDeath");

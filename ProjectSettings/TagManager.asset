@@ -9,9 +9,9 @@ TagManager:
   - EnemyLaser
   - Asteroid
   - Shield
-  - Undefined
   - Powerup
   - Missile
+  - Destroyed
   layers:
   - Default
   - TransparentFX

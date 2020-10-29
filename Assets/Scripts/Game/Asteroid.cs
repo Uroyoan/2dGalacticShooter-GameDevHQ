@@ -49,6 +49,7 @@ public class Asteroid : MonoBehaviour
 
   public void AsteroidDestroyed()
   {
+    transform.parent = null;
     Destroy(GetComponent<Collider2D>());
     _anim.SetTrigger("OnAsteroidDestroyed");
     _asteroidSounds.Play();
