@@ -8,7 +8,9 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	private float _speed = 8f;
 	private float _modifiedSpeed;
-	[SerializeField]
+	private float _slowSpeed = 2;
+	private bool _slowMovement = false;
+[SerializeField]
 	private int _lives = 3;
 	[SerializeField]
 	private float _fuel = 100;
@@ -159,18 +161,39 @@ public class Player : MonoBehaviour
 	}
 	private void Thrusters()
 	{
-		if (Input.GetKey(KeyCode.LeftShift) && _fuel > 0)
+		if (Input.GetKey(KeyCode.LeftShift) && _fuel > 0 && _slowMovement == false)
 		{
-			_modifiedSpeed = _speed * _speedMultiplier;
+			_modifiedSpeed = _speed *_speedMultiplier;
 			_fuel -= (_fuelBurnTime * 5) * Time.deltaTime;
 			_speedVisualizer.SetActive(true);
 		}
 		else
 		{
-			_modifiedSpeed = _speed;
+			if (_slowMovement == false)
+			{
+				_modifiedSpeed = _speed;
+			}
+			else 
+			{
+				_modifiedSpeed = _speed / _slowSpeed;
+			}
 			_speedVisualizer.SetActive(false);
 		}
 		_uiManager.UpdateThrusters(_fuel / 100);
+	}
+
+
+	public void SlowDownActive()
+	{
+		AudioSource.PlayClipAtPoint(_noAmmoClip, transform.position);
+		_modifiedSpeed += _speed / _slowSpeed;
+		_slowMovement = true;
+		StartCoroutine(RemoveSlowdownRoutine());
+	}
+	IEnumerator RemoveSlowdownRoutine()
+	{
+		yield return new WaitForSeconds(_slowSpeed * 2);
+		_slowMovement = false;
 	}
 
 

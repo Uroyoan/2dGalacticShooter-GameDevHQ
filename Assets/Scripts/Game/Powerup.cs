@@ -5,7 +5,7 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
 	private float _speed = 3f;
-	[SerializeField] // shield = 1, speed = 2, tripleshot = 3, ammo = 4, Missile = 5
+	[SerializeField] // shield = 1, speed = 2, tripleshot = 3, ammo = 4, Missile = 5, Slow = 6,
 	private int _powerUpID;
 
 	private void Update()
@@ -41,6 +41,10 @@ public class Powerup : MonoBehaviour
 
 				case 5:
 					player.MissileActive();
+					break;
+
+				case 6:
+					player.SlowDownActive();
 					break;
 
 				default:

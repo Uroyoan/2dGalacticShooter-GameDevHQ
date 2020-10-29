@@ -115,7 +115,7 @@ public class SpawnManager : MonoBehaviour
 				_powerSelected = Random.Range(0, 5);
 				break;
 			case int _powerRarity when (_powerRarity <= 10):
-				_powerSelected = 5;
+				_powerSelected = Random.Range(5,7);
 				break;
 			default:
 				Debug.Log("SpawnManager::SelectPowerup ERROR");

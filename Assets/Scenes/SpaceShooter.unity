@@ -162,6 +162,7 @@ MonoBehaviour:
   - {fileID: 6967553324940208022, guid: dc5e1295b63c0f04f9c5109d3f28ff87, type: 3}
   - {fileID: 2775634286316501504, guid: 49a6a42289444f844afeef7c69c40968, type: 3}
   - {fileID: 4257777017008777297, guid: 5b40d67cf39485a408e469d40422b7ca, type: 3}
+  - {fileID: 2277610956740602751, guid: ccdec9048ab1eb241a4a58f046483104, type: 3}
   _powerupSpawnRate: 10
   _powerupContainer: {fileID: 648862252}
   _asteroidPrefab: {fileID: 5117534963838778232, guid: 7a3893a5e1fb8a949a7dfc22f600de0d, type: 3}
@@ -567,7 +568,7 @@ MonoBehaviour:
   _restartText: {fileID: 884503773}
   _ammoText: {fileID: 1141469502}
   _ammoClipBarImg: {fileID: 33778392}
-  _nextWave: 1
+  _gameManager: {fileID: 0}
 --- !u!1 &591534645
 GameObject:
   m_ObjectHideFlags: 0
