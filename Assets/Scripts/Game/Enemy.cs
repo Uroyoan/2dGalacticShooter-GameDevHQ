@@ -9,15 +9,15 @@ public class Enemy : MonoBehaviour
   private AudioSource _enemySounds;
   [SerializeField]
   private GameObject _LaserPrefab;
+  private Vector3 _direction = new Vector3(0, -1, 0);
 
   private Player _player;
   private Animator _anim;
   private bool _death = false;
   private float _fireRate = 3.0f;
   private float _canFire = -1;
-
-
-	private void Start()
+  private float _sporaticMovement = -1;
+  private void Start()
 	{
     _player = GameObject.Find("Player").GetComponent<Player>();
     if (_player == null)
@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour
       _fireRate = Random.Range(3f, 9f);
       _canFire = Time.time + _fireRate;
       EnemyShooting();
+      
       }
 
     }
@@ -64,12 +65,27 @@ public class Enemy : MonoBehaviour
 
 
   void CalculateEnemyMovement ()
-  { //Movement
-    Vector3 direction = new Vector3(0,-1,0);
-    transform.Translate(direction * _speed * Time.deltaTime);
+  { 
+    // Movement
+    //_direction = new Vector3(0,-1,0);
+
+    if (Time.time > _sporaticMovement)
+    {
+      _direction.x = Random.Range(-1,2);
+      _sporaticMovement = Time.time + 3f;
+		}
+
+    transform.Translate(_direction * _speed * Time.deltaTime);
 
     // Boundries X
-    transform.position = new Vector3(Mathf.Clamp(transform.position.x, -11.1f, 10.3f), transform.position.y, 0);
+    if (transform.position.x >= 10f && _death == false)
+    {
+      transform.position = new Vector3(-11f, Random.Range( -5f, 6f), 0);
+		}
+    else if (transform.position.x <= -11f && _death == false)
+    {
+      transform.position = new Vector3(10f, Random.Range(-5f, 6f), 0);
+    }
 
     // Boundries Y
     if (transform.position.y >= 7f && _death == false)
@@ -80,16 +96,13 @@ public class Enemy : MonoBehaviour
     {
       transform.position = new Vector3(Random.Range(-9f, 9f), 7f, 0);
     }
-    else
-    {
-      
-      return;
-		}
+
   }
 
 
   public void DeathSequence()
   {
+    gameObject.tag = "Destroyed";
     transform.parent = null;
     _death = true;
     _anim.SetTrigger("OnEnemyDeath");
@@ -115,6 +128,10 @@ public class Enemy : MonoBehaviour
     if (other.tag == "EnemyLaser")
     {
       Destroy(other.gameObject);
+      if (other.transform.parent != null)
+      {
+        Destroy(other.transform.parent.gameObject);
+      }
       if (_player != null)
       {
         _player.AddScore(5);

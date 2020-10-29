@@ -41,11 +41,6 @@ public class Missile : MonoBehaviour
     _angulo = _radianes * (180/3.1415f);
   }
 
-
-  IEnumerator Targeting()
-  {
-    yield return new WaitForSeconds(1f);
-  }
   private void LockedOn()
   {
     findAngle(_enemyShip.position);
@@ -54,17 +49,11 @@ public class Missile : MonoBehaviour
   private void CalculateMovement ()
 	{
     transform.Translate(new Vector3(0, 1f, 0) * _speed * Time.deltaTime);
-    if (tag == "Missile")
-    {
-      if (_enemyShip != null)
+
+      if (_enemyShip.tag != "Destroyed")
       {
         LockedOn();
       }
-      else
-      {
-        Targeting();
-      }
-    }
 
     // Boundries y
     if (transform.position.y >= 8.5f)

@@ -57,7 +57,7 @@ Phase one, Framework:
 
 Phase Two, Core Programming:
 
-1#  New Enemy Movement: Not Done
+1#  New Enemy Movement: Commited
     Enable the Enemies to move in a new way, either from side to side, circling, or coming into the play field at an angle.
     
 2#  Player Ammo: Not Done

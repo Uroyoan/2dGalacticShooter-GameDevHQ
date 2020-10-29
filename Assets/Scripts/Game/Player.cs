@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
 	private GameObject _rightEngineVisualizer;
 	private Animator _anim;
 	private bool _death = false;
+	private bool _diedOnce = false;
 	[SerializeField]
 	private CameraShake _cameraShake;
 
@@ -143,6 +144,7 @@ public class Player : MonoBehaviour
 		_shieldVisualizer.SetActive(true);
 	}
 
+
 	public void AddFuel()
 	{
 		_fuel = 100;
@@ -217,6 +219,7 @@ public class Player : MonoBehaviour
 		_uiManager.UpdateLives(_lives);
 	}
 
+
 	private void CameraShaking()
 	{
 		StartCoroutine(_cameraShake.Shake());
@@ -283,7 +286,6 @@ public class Player : MonoBehaviour
 				_shieldVisualizer.SetActive(false);
 				break;
 		}
-		CameraShaking();
 	}
 	public void DamageCollision()
 	{
@@ -310,17 +312,23 @@ public class Player : MonoBehaviour
 			_uiManager.UpdateLives(_lives);
 			DamageVisualiser();
 		}
+
 		if (_lives <= 0)
 		{
 			_death = true;
-			Destroy(GetComponent<Collider2D>());
-			_anim.SetTrigger("OnPlayerDeath");
-			AudioSource.PlayClipAtPoint(_deathClip, transform.position);
-			_spawnManager.OnPlayerDeath();
-			Destroy(this.gameObject, 2.6f);
+			if (_diedOnce == false)
+			{
+				_diedOnce = true;
+				Destroy(GetComponent<Collider2D>());
+				_anim.SetTrigger("OnPlayerDeath");
+				AudioSource.PlayClipAtPoint(_deathClip, transform.position);
+				_spawnManager.OnPlayerDeath();
+				Destroy(this.gameObject, 2.6f);
+			}
 		}
-	}
+		CameraShaking();
 
+	}
 
 	void PlayerShooting()
 	{
@@ -350,6 +358,7 @@ public class Player : MonoBehaviour
 		{
 			AudioSource.PlayClipAtPoint(_noAmmoClip, transform.position);
 		}
+
 	}
 
 
@@ -404,6 +413,10 @@ public class Player : MonoBehaviour
 		if (other.tag == "EnemyLaser")
 		{
 			Destroy(other.gameObject);
+			if (other.transform.parent != null)
+			{
+				Destroy(other.transform.parent.gameObject);
+			}
 			Damage();
 		}
 
