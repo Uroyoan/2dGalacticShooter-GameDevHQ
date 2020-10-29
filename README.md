@@ -66,7 +66,7 @@ Phase Two, Core Programming:
 3#  Wave System: Commited
     Implement wave sequencing of enemies with more enemies coming each wave.
     
-4#  Negative Pickup: Not Done
+4#  Negative Pickup: Commited
     Create a powerup that negatively affects the player.
     
 5#  New Enemy Type: Not Done
