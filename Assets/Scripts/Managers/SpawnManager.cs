@@ -17,31 +17,77 @@ public class SpawnManager : MonoBehaviour
 	[SerializeField]
 	private GameObject _powerupContainer;
 	private int _powerSelected;
-	private bool _stopSpawning = false;
 
+	[SerializeField]
+	private GameObject _asteroidPrefab;
+	[SerializeField]
+	private bool _stopSpawning = false;
+	[SerializeField]
+	private int _enemySpawn = 5;
+	[SerializeField]
+	private int _enemiesToSpawn = 0;
+	[SerializeField]
+	private int _currentWave = 0;
+	[SerializeField]
+	private int _enemiesInContainer;
+	private UiManager _uiManager;
+
+	private void Start()
+	{
+		_uiManager = GameObject.Find("Canvas").GetComponent<UiManager>();
+		if (_uiManager == null)
+		{
+			Debug.LogError("Player::UI MANAGER IS NULL");
+		}
+	}
 	public void startSpawn()
 	{
-		Debug.Log("Starting Spawn Routine...");
+		_currentWave++;
+		
+		_stopSpawning = false;
+		AddWaves(_currentWave);
+
+		_enemiesToSpawn += _currentWave * _enemySpawn;
+		//Debug.Log("Wave: " + _currentWave);
+		//Debug.Log("Enemy to Spawn: " + _currentWave);
 		StartCoroutine(SpawnEnemyRoutine());
 		StartCoroutine(SpawnPowerupRoutine());
 	}
+
 	public void OnPlayerDeath()
 	{
 		_stopSpawning = true;
 	}
-
+	private void AddWaves(int currentWaves)
+	{
+		_currentWave = currentWaves;
+	}
 
 	IEnumerator SpawnEnemyRoutine ()
 	{
 		yield return new WaitForSeconds(2f);
-
-		while (_stopSpawning == false)
+		while (_stopSpawning == false && _enemiesToSpawn > 0)
 		{
-			Vector3 spawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-			GameObject newEnemy = Instantiate(_enemyPrefab, spawnPos, Quaternion.identity);
+			Vector3 enemySpawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
+			GameObject newEnemy = Instantiate(_enemyPrefab, enemySpawnPos, Quaternion.identity);
 
 			newEnemy.transform.parent = _enemyContainer.transform;
+			_enemiesInContainer = _enemyContainer.transform.childCount;
+			_enemiesToSpawn--;
 			yield return new WaitForSeconds(_enemySpawnRate);
+		}
+		while (_stopSpawning == false && _enemiesInContainer >= 1)
+		{
+			_enemiesInContainer = _enemyContainer.transform.childCount;
+			yield return new WaitForSeconds(1);
+		}
+		if (_stopSpawning == false && _enemiesToSpawn <= 0 && _enemiesInContainer == 0)
+		{
+			_uiManager.UpdateWaves(_currentWave + 1);
+			_stopSpawning = true;
+			Vector3 asteroidSpawnPos = new Vector3(0, 8, 0);
+			GameObject newWave = Instantiate(_asteroidPrefab, asteroidSpawnPos, Quaternion.identity);
+			newWave.transform.parent = _enemyContainer.transform;
 		}
 	}
 

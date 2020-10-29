@@ -350,7 +350,7 @@ public class Player : MonoBehaviour
 				Instantiate(_tripleShotPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
 				AudioSource.PlayClipAtPoint(_laserClip, transform.position);
 			}
-			if (_tripleShotActive == false && _missileActive == true)
+			else if (_tripleShotActive == false && _missileActive == true)
 			{
 				Instantiate(_MissilePrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
 				AudioSource.PlayClipAtPoint(_missileClip, transform.position);
@@ -361,12 +361,11 @@ public class Player : MonoBehaviour
 				AudioSource.PlayClipAtPoint(_laserClip, transform.position);
 			}
 			_ammoMagazine--;
-
-		}
-		else if (_ammoMagazine <= 0 && _ammoClip > 0)
-		{
-			_ammoMagazine = 10;
-			_ammoClip--;
+			if (_ammoMagazine <= 0 && _ammoClip > 0)
+			{
+				_ammoMagazine = 10;
+				_ammoClip--;
+			}
 		}
 		else
 		{

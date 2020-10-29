@@ -63,7 +63,7 @@ Phase Two, Core Programming:
 2#  Player Ammo: Commited
     Visualize on screen the ammo count of the player in the form of current/max.
     
-3#  Wave System: Not Done
+3#  Wave System: Commited
     Implement wave sequencing of enemies with more enemies coming each wave.
     
 4#  Negative Pickup: Not Done
