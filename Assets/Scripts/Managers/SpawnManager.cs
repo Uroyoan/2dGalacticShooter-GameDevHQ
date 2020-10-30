@@ -5,11 +5,14 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
 	[SerializeField]
-	private GameObject _enemyPrefab;
+	private GameObject[] _enemyPrefabs;
 	[SerializeField]
 	private float _enemySpawnRate = 5f;
 	[SerializeField]
 	private GameObject _enemyContainer;
+	private int _enemySelected;
+	private int _enemySide;
+
 	[SerializeField]
 	private GameObject[] _powerupPrefabs;
 	[SerializeField]
@@ -68,11 +71,7 @@ public class SpawnManager : MonoBehaviour
 		yield return new WaitForSeconds(2f);
 		while (_stopSpawning == false && _enemiesToSpawn > 0)
 		{
-			Vector3 enemySpawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-			GameObject newEnemy = Instantiate(_enemyPrefab, enemySpawnPos, Quaternion.identity);
-
-			newEnemy.transform.parent = _enemyContainer.transform;
-			_enemiesInContainer = _enemyContainer.transform.childCount;
+			SelectEnemy(Random.Range(1, 101));
 			_enemiesToSpawn--;
 			yield return new WaitForSeconds(_enemySpawnRate);
 		}
@@ -90,11 +89,45 @@ public class SpawnManager : MonoBehaviour
 			newWave.transform.parent = _enemyContainer.transform;
 		}
 	}
+	private void SelectEnemy(int enemyRandomizer)
+	{
+		switch (enemyRandomizer)
+		{
+			case int _EnemyRarity when (_EnemyRarity > 20):
+				_enemySelected = 0;
+				Vector3 enemySpawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
+				GameObject newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.identity);
+				newEnemy.transform.parent = _enemyContainer.transform;
+				_enemiesInContainer = _enemyContainer.transform.childCount;
+				break;
+
+			case int _EnemyRarity when (_EnemyRarity <= 20):
+				_enemySelected = 1;
+				if (Random.Range(0, 2) == 0)
+				{
+					_enemySide = 9;
+				}
+				else
+				{
+					_enemySide = -9;
+				}
+				enemySpawnPos = new Vector3(_enemySide, 7f, 0);
+				newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.identity);
+				newEnemy.transform.parent = _enemyContainer.transform;
+				_enemiesInContainer = _enemyContainer.transform.childCount;
+				break;
+
+			default:
+				Debug.Log("SpawnManager::SelectEnemy ERROR");
+				break;
+		}
+
+	}
+
 
 	IEnumerator SpawnPowerupRoutine ()
 	{
-		yield return new WaitForSeconds(4f);
-
+		yield return new WaitForSeconds(2f);
 		while (_stopSpawning == false)
 		{
 			SelectPowerup(Random.Range(1, 101));

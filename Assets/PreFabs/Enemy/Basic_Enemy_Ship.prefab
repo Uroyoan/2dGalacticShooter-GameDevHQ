@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 2844719409846964151}
   - component: {fileID: -8855362225855876349}
   m_Layer: 0
-  m_Name: Enemy
-  m_TagString: Enemy
+  m_Name: Basic_Enemy_Ship
+  m_TagString: BasicEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
-  _LaserPrefab: {fileID: 4692188247495011801, guid: 588fc89f164ebd84487a1205cdd6c223, type: 3}
+  _enemyExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _enemyLockingOn: {fileID: 8300000, guid: 8265bfaeed10aa14ea4f1bec00613f34, type: 3}
+  _laserPrefab: {fileID: 2146697166631394692, guid: 80dead945e0797844b91c8197d41adca, type: 3}
+  _missilePrefab: {fileID: 8044056099033807951, guid: 2d04b507d6d1a32448e052e0fa2cf729, type: 3}
 --- !u!212 &1594629818444100125
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -230,10 +230,15 @@ public class Player : MonoBehaviour
 	public void AddAmmo()
 	{
 		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
-		if (_ammoClip <= 3)
+		if (_ammoClip <= 3 && _ammoClip != 0)
 		{
 			_ammoClip++;
 			_uiManager.UpdateClip(_ammoClip / 4);
+		}
+		else if (_ammoClip == 0)
+		{
+			_ammoMagazine = 10;
+			_uiManager.UpdateAmmo(_ammoMagazine);
 		}
 		else 
 		{
@@ -355,6 +360,7 @@ public class Player : MonoBehaviour
 				_diedOnce = true;
 				Destroy(GetComponent<Collider2D>());
 				_anim.SetTrigger("OnPlayerDeath");
+				_uiManager.UpdateLives(_lives);
 				AudioSource.PlayClipAtPoint(_deathClip, transform.position);
 				_spawnManager.OnPlayerDeath();
 				Destroy(this.gameObject, 2.6f);
@@ -375,7 +381,7 @@ public class Player : MonoBehaviour
 			}
 			else if (_tripleShotActive == false && _missileActive == true)
 			{
-				Instantiate(_MissilePrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+				Instantiate(_MissilePrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
 				AudioSource.PlayClipAtPoint(_missileClip, transform.position);
 			}
 			else
@@ -447,7 +453,7 @@ public class Player : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "EnemyLaser")
+		if (other.tag == "LaserOfEnemy" || other.tag == "MissileOfEnemy")
 		{
 			Destroy(other.gameObject);
 			if (other.transform.parent != null)
@@ -457,7 +463,7 @@ public class Player : MonoBehaviour
 			Damage();
 		}
 
-		if (other.tag == "Enemy")
+		if (other.tag == "BasicEnemy" || other.tag == "MissileEnemy")
 		{
 			other.gameObject.GetComponent<Enemy>().DeathSequence();
 			DamageCollision();

@@ -16,11 +16,11 @@ public class Laser : MonoBehaviour
 
 	void CalculateLaserMovement()
   {
-    if (tag == "Laser")
+    if (gameObject.tag == "Laser")
     {
       transform.Translate(new Vector3( 0, 1f, 0) * _speed * Time.deltaTime);
     }
-    if (tag == "EnemyLaser")
+    if (gameObject.tag == "LaserOfEnemy")
     {
       transform.Translate(new Vector3( 0, -1f, 0) *_speed * Time.deltaTime);
     }

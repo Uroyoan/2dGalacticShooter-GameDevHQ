@@ -6,12 +6,16 @@ TagManager:
   tags:
   - Enemy
   - Laser
-  - EnemyLaser
   - Asteroid
   - Shield
   - Powerup
   - Missile
   - Destroyed
+  - MissileEnemy
+  - BasicEnemy
+  - MissileOfEnemy
+  - LaserOfEnemy
+  - WaveEnemy
   layers:
   - Default
   - TransparentFX
