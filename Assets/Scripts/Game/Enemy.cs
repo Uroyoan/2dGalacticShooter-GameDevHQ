@@ -13,9 +13,15 @@ public class Enemy : MonoBehaviour
   [SerializeField]
   private AudioClip _enemyLockingOn;
   [SerializeField]
+  private AudioClip _enemyLaser;
+  [SerializeField]
+  private AudioClip _enemyMissile;
+  [SerializeField]
   private GameObject _laserPrefab;
   [SerializeField]
   private GameObject _missilePrefab;
+  private AudioSource _enemySounds;
+
   private Player _player;
   private Animator _anim;
   private bool _death = false;
@@ -51,6 +57,12 @@ public class Enemy : MonoBehaviour
       Debug.LogError("Enemy::The Animator is NULL");
     }
 
+    _enemySounds = gameObject.GetComponent<AudioSource>();
+    if (_enemySounds == null)
+    {
+      Debug.LogError("Enemy::AUDIO IS NULL");
+    }
+
     _canFireMissile = Time.time + _fireRate;
     _canFireLaser = Time.time + 0.5f;
   }
@@ -75,11 +87,13 @@ public class Enemy : MonoBehaviour
 
   public void EnemyShootingMissile()
   {
+    _enemySounds.PlayOneShot(_enemyMissile);
     GameObject missileOfEnemy = Instantiate(_missilePrefab, transform.position + new Vector3(0, -1.5f, 0), Quaternion.identity);
   }
   public void EnemyShootingLaser()
   {
     GameObject laserOfEnemy = Instantiate(_laserPrefab, transform.position + new Vector3(0, -1.5f, 0), Quaternion.identity);
+    _enemySounds.PlayOneShot(_enemyLaser);
   }
 
 
@@ -113,7 +127,7 @@ public class Enemy : MonoBehaviour
           LookAtPlayer();
           if (Time.time > (_canFireMissile - 6.5f))
           {
-            AudioSource.PlayClipAtPoint(_enemyLockingOn, transform.position);
+            _enemySounds.PlayOneShot(_enemyLockingOn);
           }
         }
         break;
@@ -149,11 +163,10 @@ public class Enemy : MonoBehaviour
 
   public void DeathSequence()
   {
-    gameObject.GetComponent<AudioSource>().Stop();
+    _enemySounds.PlayOneShot(_enemyExplosion);
     _death = true;
     transform.parent = null;
     _anim.SetTrigger("OnEnemyDeath");
-    AudioSource.PlayClipAtPoint(_enemyExplosion, transform.position);
     Destroy(GetComponent<Collider2D>());
     Destroy(this.gameObject, 2.6f);
 	}

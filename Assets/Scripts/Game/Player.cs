@@ -10,12 +10,13 @@ public class Player : MonoBehaviour
 	private float _modifiedSpeed;
 	private float _slowSpeed = 2;
 	private bool _slowMovement = false;
-[SerializeField]
+	[SerializeField]
 	private int _lives = 3;
 	[SerializeField]
 	private float _fuel = 100;
 	[SerializeField]
 	private float _fuelBurnTime = 5;
+	private AudioSource _playerSounds;
 
 	[SerializeField]
 	private AudioClip _deathClip;
@@ -107,6 +108,12 @@ public class Player : MonoBehaviour
 			Debug.LogError("Player::THE SPRITE RENDERER IS NULL");
 		}
 
+		_playerSounds = gameObject.GetComponent<AudioSource>();
+		if (_playerSounds == null)
+		{
+			Debug.LogError("Player::AUDIO IS NULL");
+		}
+
 		_uiManager.UpdateAmmo(_ammoMagazine);
 		_uiManager.UpdateClip(_ammoClip / 4);
 		transform.position = new Vector3(0, -3, 0);
@@ -145,7 +152,7 @@ public class Player : MonoBehaviour
 
 	public void ShieldActive()
 	{
-		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
+		_playerSounds.PlayOneShot(_powerupClip);
 		_shieldActive = true;
 		_shieldStrength = 3;
 		_shieldColor.material.color = new Color(1f, 1f, 1f, 1f);
@@ -155,7 +162,7 @@ public class Player : MonoBehaviour
 
 	public void AddFuel()
 	{
-		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
+		_playerSounds.PlayOneShot(_powerupClip);
 		_fuel = 100;
 		_uiManager.UpdateThrusters(_fuel / 100);
 	}
@@ -185,7 +192,7 @@ public class Player : MonoBehaviour
 
 	public void SlowDownActive()
 	{
-		AudioSource.PlayClipAtPoint(_noAmmoClip, transform.position);
+		_playerSounds.PlayOneShot(_noAmmoClip);
 		_modifiedSpeed += _speed / _slowSpeed;
 		_slowMovement = true;
 		StartCoroutine(RemoveSlowdownRoutine());
@@ -199,7 +206,7 @@ public class Player : MonoBehaviour
 
 	public void TripleShotActive()
 	{
-		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
+		_playerSounds.PlayOneShot(_powerupClip);
 		_tripleShotActive = true;
 		_missileActive = false;
 
@@ -214,7 +221,7 @@ public class Player : MonoBehaviour
 
 	public void MissileActive()
 	{
-		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
+		_playerSounds.PlayOneShot(_powerupClip);
 		_missileActive = true;
 		_tripleShotActive = false;
 
@@ -229,13 +236,13 @@ public class Player : MonoBehaviour
 
 	public void AddAmmo()
 	{
-		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
-		if (_ammoClip <= 3 && _ammoClip != 0)
+		_playerSounds.PlayOneShot(_powerupClip);
+		if (_ammoClip <= 3 && _ammoMagazine != 0)
 		{
 			_ammoClip++;
 			_uiManager.UpdateClip(_ammoClip / 4);
 		}
-		else if (_ammoClip == 0)
+		else if (_ammoClip == 0 && _ammoMagazine == 0)
 		{
 			_ammoMagazine = 10;
 			_uiManager.UpdateAmmo(_ammoMagazine);
@@ -243,12 +250,12 @@ public class Player : MonoBehaviour
 		else 
 		{
 			_ammoMagazine = 10;
-			_uiManager.UpdateAmmo(_ammoMagazine);
+			_uiManager.UpdateClip(_ammoClip / 4);
 		}
 	}
 	public void AddHealth()
 	{
-		AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
+		_playerSounds.PlayOneShot(_powerupClip);
 		_lives++;
 		if (_lives > 3)
 		{
@@ -361,7 +368,7 @@ public class Player : MonoBehaviour
 				Destroy(GetComponent<Collider2D>());
 				_anim.SetTrigger("OnPlayerDeath");
 				_uiManager.UpdateLives(_lives);
-				AudioSource.PlayClipAtPoint(_deathClip, transform.position);
+				_playerSounds.PlayOneShot(_deathClip);
 				_spawnManager.OnPlayerDeath();
 				Destroy(this.gameObject, 2.6f);
 			}
@@ -377,17 +384,17 @@ public class Player : MonoBehaviour
 			if (_tripleShotActive == true && _missileActive == false)
 			{
 				Instantiate(_tripleShotPrefab, transform.position + new Vector3(0, 0, 0), Quaternion.identity);
-				AudioSource.PlayClipAtPoint(_laserClip, transform.position);
+				_playerSounds.PlayOneShot(_laserClip);
 			}
 			else if (_tripleShotActive == false && _missileActive == true)
 			{
 				Instantiate(_MissilePrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
-				AudioSource.PlayClipAtPoint(_missileClip, transform.position);
+				_playerSounds.PlayOneShot(_missileClip);
 			}
 			else
 			{
 				Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
-				AudioSource.PlayClipAtPoint(_laserClip, transform.position);
+				_playerSounds.PlayOneShot(_laserClip);
 			}
 			_ammoMagazine--;
 			if (_ammoMagazine <= 0 && _ammoClip > 0)
