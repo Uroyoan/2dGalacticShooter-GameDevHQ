@@ -69,7 +69,7 @@ Phase Two, Core Programming:
 4#  Negative Pickup: Commited
     Create a powerup that negatively affects the player.
     
-5#  New Enemy Type: Not Done
+5#  New Enemy Type: Commited
     Create enemy types that can fire & damage the player
     Create enemy type with unique projectile.(ie. Laser beam, heat seeking, etc)
     Unique Movement Behavior (zig-zag,wave, etc)
