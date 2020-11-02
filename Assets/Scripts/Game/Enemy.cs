@@ -134,11 +134,11 @@ public class Enemy : MonoBehaviour
         break;
 
       case "WaveEnemy":
-        if (transform.position.y > 5.5f)
+        if (transform.position.y > 5.5f && _death == false)
         {
           gameObject.transform.rotation = Quaternion.Euler(0f, 0f, 45f);
         }
-        else if (transform.position.y < -4f)
+        else if (transform.position.y < -4f && _death == false)
         {
           gameObject.transform.rotation = Quaternion.Euler(0f, 0f, 135f);
         }

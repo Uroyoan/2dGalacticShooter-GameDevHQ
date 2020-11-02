@@ -1890,7 +1890,6 @@ MonoBehaviour:
   - {fileID: 9106720977730808276, guid: 36e9ae0202a624343b6de638ae559e1b, type: 3}
   - {fileID: 5355948936699543265, guid: b621de339edd7224493c28e951677544, type: 3}
   - {fileID: 6013841053492859888, guid: c31d195e95de7d741a3522aab18f4c5d, type: 3}
-  _enemySpawnRate: 5
   _enemyContainer: {fileID: 7518674606584841988}
   _powerupPrefabs:
   - {fileID: 8843763521326216515, guid: 5a39f3678998ff6439f542e6c76953c2, type: 3}
@@ -1900,12 +1899,13 @@ MonoBehaviour:
   - {fileID: 2775634286316501504, guid: 49a6a42289444f844afeef7c69c40968, type: 3}
   - {fileID: 4257777017008777297, guid: 5b40d67cf39485a408e469d40422b7ca, type: 3}
   - {fileID: 2277610956740602751, guid: ccdec9048ab1eb241a4a58f046483104, type: 3}
-  _powerupSpawnRate: 10
   _powerupContainer: {fileID: 7518674608377116507}
   _asteroidPrefab: {fileID: 5117534963838778232, guid: 7a3893a5e1fb8a949a7dfc22f600de0d, type: 3}
   _stopSpawning: 0
   _enemySpawn: 5
   _enemiesToSpawn: 0
+  _enemySpawnRate: 2
+  _powerupSpawnRate: 5
   _currentWave: 0
   _enemiesInContainer: 0
 --- !u!1 &7518674607757412824

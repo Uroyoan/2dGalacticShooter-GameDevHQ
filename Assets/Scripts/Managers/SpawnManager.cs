@@ -26,9 +26,9 @@ public class SpawnManager : MonoBehaviour
 	[SerializeField]
 	private int _enemiesToSpawn = 0;
 	[SerializeField]
-	private float _enemySpawnRate = 5f;
+	private float _enemySpawnRate = 2f;
 	[SerializeField]
-	private float _powerupSpawnRate = 10f;
+	private float _powerupSpawnRate = 5f;
 	[SerializeField]
 	private int _currentWave = 0;
 	[SerializeField]
@@ -140,7 +140,7 @@ public class SpawnManager : MonoBehaviour
 			GameObject newPowerup = Instantiate(_powerupPrefabs[_powerSelected], spawnPos, Quaternion.identity);
 
 			newPowerup.transform.parent = _powerupContainer.transform;
-			yield return new WaitForSeconds(Random.Range(_powerupSpawnRate - 3, _powerupSpawnRate));
+			yield return new WaitForSeconds(_powerupSpawnRate);
 		}
 	}
 
@@ -148,13 +148,26 @@ public class SpawnManager : MonoBehaviour
 	private void SelectPowerup(int powerRandomizer)
 	{
 		switch(powerRandomizer)
-		{
-			case int _powerRarity when (_powerRarity > 10):
-				_powerSelected = Random.Range(0, 5);
+		{// shield = 0, speed = 1, tripleshot = 2, ammo = 3, Life = 4, Missile = 5, Slow = 6
+			case int _powerRarity when (_powerRarity <= 5):
+				_powerSelected = 0;
 				break;
-			case int _powerRarity when (_powerRarity <= 10):
-				_powerSelected = Random.Range(5,7);
+			case int _powerRarity when (_powerRarity > 5 && _powerRarity <= 15):
+				_powerSelected = 4;
 				break;
+
+			case int _powerRarity when (_powerRarity > 15 && _powerRarity <= 30):
+				_powerSelected = Random.Range(5, 7);
+				break;
+
+			case int _powerRarity when (_powerRarity > 30 && _powerRarity <= 50):
+				_powerSelected = Random.Range(1, 3);
+				break;
+
+			case int _powerRarity when (_powerRarity > 50):
+				_powerSelected = 3;
+				break;
+
 			default:
 				Debug.Log("SpawnManager::SelectPowerup ERROR");
 				break;

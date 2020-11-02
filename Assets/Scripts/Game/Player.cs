@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 	private float _fireRate = 0.2f;
 	private float _canFire = 0f;
 	[SerializeField]
-	private int _ammoMagazine = 5;
+	private int _ammoMagazine = 6;
 	[SerializeField]
 	private float _ammoClip = 1;
 	[SerializeField]
@@ -250,7 +250,7 @@ public class Player : MonoBehaviour
 		else 
 		{
 			_ammoMagazine = 10;
-			_uiManager.UpdateClip(_ammoClip / 4);
+			_uiManager.UpdateAmmo(_ammoMagazine);
 		}
 	}
 	public void AddHealth()

@@ -74,7 +74,7 @@ Phase Two, Core Programming:
     Create enemy type with unique projectile.(ie. Laser beam, heat seeking, etc)
     Unique Movement Behavior (zig-zag,wave, etc)
     
-6#  Balanced Spawning: Not Done
+6#  Balanced Spawning: Commited
     Create a balanced spawning system between Enemies & pickups
     Ie. Pickups like Health should be rare, where ammo is frequent
     
