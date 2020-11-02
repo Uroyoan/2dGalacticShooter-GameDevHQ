@@ -9,6 +9,12 @@ public class Enemy : MonoBehaviour
   [SerializeField]
   private float _speed = 4f;
   [SerializeField]
+  private GameObject _laserPrefab;
+  [SerializeField]
+  private GameObject _missilePrefab;
+
+  private AudioSource _enemySounds;
+  [SerializeField]
   private AudioClip _enemyExplosion;
   [SerializeField]
   private AudioClip _enemyLockingOn;
@@ -16,11 +22,6 @@ public class Enemy : MonoBehaviour
   private AudioClip _enemyLaser;
   [SerializeField]
   private AudioClip _enemyMissile;
-  [SerializeField]
-  private GameObject _laserPrefab;
-  [SerializeField]
-  private GameObject _missilePrefab;
-  private AudioSource _enemySounds;
 
   private Player _player;
   private Animator _anim;
@@ -72,7 +73,7 @@ public class Enemy : MonoBehaviour
   {
     CalculateEnemyMovement();
 
-    if (Time.time > _canFireLaser && gameObject.tag == "BasicEnemy" && _death == false)
+    if (Time.time > _canFireLaser && (gameObject.tag == "BasicEnemy" || gameObject.tag == "WaveEnemy") && _death == false)
     {
       _fireRate = Random.Range(3f, 9f);
       _canFireLaser = Time.time + _fireRate;
@@ -92,7 +93,7 @@ public class Enemy : MonoBehaviour
   }
   public void EnemyShootingLaser()
   {
-    GameObject laserOfEnemy = Instantiate(_laserPrefab, transform.position + new Vector3(0, -1.5f, 0), Quaternion.identity);
+    GameObject laserOfEnemy = Instantiate(_laserPrefab, transform.localPosition, transform.rotation);
     _enemySounds.PlayOneShot(_enemyLaser);
   }
 
@@ -132,11 +133,22 @@ public class Enemy : MonoBehaviour
         }
         break;
 
+      case "WaveEnemy":
+        if (transform.position.y > 5.5f)
+        {
+          gameObject.transform.rotation = Quaternion.Euler(0f, 0f, 45f);
+        }
+        else if (transform.position.y < -4f)
+        {
+          gameObject.transform.rotation = Quaternion.Euler(0f, 0f, 135f);
+        }
+        break;
+
       default:
         Debug.Log("Enemy::CalculateEnemyMovement TAG ERROR");
         break;
     }
-    transform.Translate(_direction * _speed * Time.deltaTime);
+      transform.Translate(_direction * _speed * Time.deltaTime);
 
     // Boundries X
     if (transform.position.x >= 11f && _death == false)

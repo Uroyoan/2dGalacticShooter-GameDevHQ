@@ -16,8 +16,8 @@ public class Player : MonoBehaviour
 	private float _fuel = 100;
 	[SerializeField]
 	private float _fuelBurnTime = 5;
-	private AudioSource _playerSounds;
 
+	private AudioSource _playerSounds;
 	[SerializeField]
 	private AudioClip _deathClip;
 	[SerializeField]
@@ -30,18 +30,18 @@ public class Player : MonoBehaviour
 	private AudioClip _missileClip;
 
 	[SerializeField]
-	private GameObject _laserPrefab;
-	[SerializeField]
-	private GameObject _tripleShotPrefab;
-	[SerializeField]
-	private GameObject _MissilePrefab;
-	[SerializeField]
 	private float _fireRate = 0.2f;
 	private float _canFire = 0f;
 	[SerializeField]
 	private int _ammoMagazine = 5;
 	[SerializeField]
 	private float _ammoClip = 1;
+	[SerializeField]
+	private GameObject _laserPrefab;
+	[SerializeField]
+	private GameObject _tripleShotPrefab;
+	[SerializeField]
+	private GameObject _MissilePrefab;
 
 
 	private UiManager _uiManager;

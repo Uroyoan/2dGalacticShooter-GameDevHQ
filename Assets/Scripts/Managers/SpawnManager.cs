@@ -7,16 +7,12 @@ public class SpawnManager : MonoBehaviour
 	[SerializeField]
 	private GameObject[] _enemyPrefabs;
 	[SerializeField]
-	private float _enemySpawnRate = 5f;
-	[SerializeField]
 	private GameObject _enemyContainer;
 	private int _enemySelected;
 	private int _enemySide;
 
 	[SerializeField]
 	private GameObject[] _powerupPrefabs;
-	[SerializeField]
-	private float _powerupSpawnRate = 10f;
 	[SerializeField]
 	private GameObject _powerupContainer;
 	private int _powerSelected;
@@ -29,6 +25,10 @@ public class SpawnManager : MonoBehaviour
 	private int _enemySpawn = 5;
 	[SerializeField]
 	private int _enemiesToSpawn = 0;
+	[SerializeField]
+	private float _enemySpawnRate = 5f;
+	[SerializeField]
+	private float _powerupSpawnRate = 10f;
 	[SerializeField]
 	private int _currentWave = 0;
 	[SerializeField]
@@ -91,37 +91,42 @@ public class SpawnManager : MonoBehaviour
 	}
 	private void SelectEnemy(int enemyRandomizer)
 	{
+		GameObject newEnemy;
+		Vector3 enemySpawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
 		switch (enemyRandomizer)
 		{
-			case int _EnemyRarity when (_EnemyRarity > 20):
+			case int _EnemyRarity when (_EnemyRarity > 40):
 				_enemySelected = 0;
-				Vector3 enemySpawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-				GameObject newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.identity);
+				newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.identity);
 				newEnemy.transform.parent = _enemyContainer.transform;
-				_enemiesInContainer = _enemyContainer.transform.childCount;
 				break;
 
-			case int _EnemyRarity when (_EnemyRarity <= 20):
+			case int _EnemyRarity when (_EnemyRarity <= 40 && _EnemyRarity > 20):
 				_enemySelected = 1;
 				if (Random.Range(0, 2) == 0)
 				{
-					_enemySide = 9;
+					enemySpawnPos.x = -9;
 				}
 				else
 				{
-					_enemySide = -9;
+					enemySpawnPos.x = -9;
 				}
-				enemySpawnPos = new Vector3(_enemySide, 7f, 0);
 				newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.identity);
 				newEnemy.transform.parent = _enemyContainer.transform;
-				_enemiesInContainer = _enemyContainer.transform.childCount;
+				break;
+
+			case int _EnemyRarity when (_EnemyRarity <= 20):
+				_enemySelected = 2;
+				enemySpawnPos = new Vector3(-10,Random.Range(-4,6),0);
+				newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.Euler(0f, 0f, 45f));
+				newEnemy.transform.parent = _enemyContainer.transform;
 				break;
 
 			default:
 				Debug.Log("SpawnManager::SelectEnemy ERROR");
 				break;
 		}
-
+		_enemiesInContainer = _enemyContainer.transform.childCount;
 	}
 
 

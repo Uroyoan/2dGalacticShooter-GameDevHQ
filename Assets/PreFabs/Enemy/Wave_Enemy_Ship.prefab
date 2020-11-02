@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4491731131401560074}
   m_Layer: 0
   m_Name: Wave_Enemy_Ship
-  m_TagString: BasicEnemy
+  m_TagString: WaveEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,12 +48,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
+  _laserPrefab: {fileID: 8468847545323017688, guid: 93655c4e3799cb344a5066ae40d5b1ae, type: 3}
+  _missilePrefab: {fileID: 8044056099033807951, guid: 2d04b507d6d1a32448e052e0fa2cf729, type: 3}
   _enemyExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyLockingOn: {fileID: 8300000, guid: 8265bfaeed10aa14ea4f1bec00613f34, type: 3}
   _enemyLaser: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _enemyMissile: {fileID: 8300000, guid: 2ebfa51c068a4e440a4e93acf47718f7, type: 3}
-  _laserPrefab: {fileID: 2146697166631394692, guid: 80dead945e0797844b91c8197d41adca, type: 3}
-  _missilePrefab: {fileID: 8044056099033807951, guid: 2d04b507d6d1a32448e052e0fa2cf729, type: 3}
 --- !u!212 &2995999198016801228
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -97,7 +97,7 @@ SpriteRenderer:
   m_Sprite: {fileID: 21300000, guid: 3154912113cbb4a498df6f571c74e18c, type: 3}
   m_Color: {r: 1, g: 0.95975, b: 0.195, a: 1}
   m_FlipX: 0
-  m_FlipY: 1
+  m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
@@ -118,7 +118,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.007865787, y: -0.0008659363}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -159,7 +159,7 @@ AudioSource:
   m_GameObject: {fileID: 6013841053492859888}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -2040783658479059515, guid: c63a4f2b7c9560e4a8c2acd8eccfcc67, type: 2}
+  OutputAudioMixerGroup: {fileID: 7144812188813803587, guid: f6bfa97d71d95c74cb589032be0ad8b2, type: 2}
   m_audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

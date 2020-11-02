@@ -520,16 +520,16 @@ MonoBehaviour:
   _powerupClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   _noAmmoClip: {fileID: 8300000, guid: d8d4d80100c523f42931d11e040a11a6, type: 3}
   _missileClip: {fileID: 8300000, guid: 2ebfa51c068a4e440a4e93acf47718f7, type: 3}
-  _laserPrefab: {fileID: 6625327793867369, guid: 813b871b65591b24eb8f0253478dedb6, type: 3}
-  _tripleShotPrefab: {fileID: 2346266084464334385, guid: 385201fb9abce3149874229b11ea2c71, type: 3}
-  _MissilePrefab: {fileID: 3912024465089868489, guid: 86a587f6b0ffe4948b120751e3b596e9, type: 3}
   _fireRate: 0.2
   _ammoMagazine: 5
   _ammoClip: 1
+  _laserPrefab: {fileID: 6625327793867369, guid: 813b871b65591b24eb8f0253478dedb6, type: 3}
+  _tripleShotPrefab: {fileID: 2346266084464334385, guid: 385201fb9abce3149874229b11ea2c71, type: 3}
+  _MissilePrefab: {fileID: 3912024465089868489, guid: 86a587f6b0ffe4948b120751e3b596e9, type: 3}
   _score: 0
   _leftEngineVisualizer: {fileID: 3391950255971527532}
   _rightEngineVisualizer: {fileID: 3391950256392264926}
-  _cameraShake: {fileID: 0}
+  _cameraShake: {fileID: 2414884673970541139, guid: 896ab9a9ea86fb548955ec10e9828230, type: 3}
   _powerTimer: 5
   _shieldStrength: 3
   _shieldVisualizer: {fileID: 3391950256585428636}
