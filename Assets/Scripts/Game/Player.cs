@@ -68,7 +68,6 @@ public class Player : MonoBehaviour
 	private int _shieldStrength = 3;
 	[SerializeField]
 	private GameObject _shieldVisualizer;
-
 	[SerializeField]
 	private bool _shieldActive = false;
 	private SpriteRenderer _shieldColor;
@@ -470,7 +469,7 @@ public class Player : MonoBehaviour
 			Damage();
 		}
 
-		if (other.tag == "BasicEnemy" || other.tag == "MissileEnemy")
+		else if (other.tag == "BasicEnemy" || other.tag == "MissileEnemy" || other.tag == "WaveEnemy")
 		{
 			other.gameObject.GetComponent<Enemy>().DeathSequence();
 			DamageCollision();

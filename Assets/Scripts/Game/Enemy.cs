@@ -30,6 +30,9 @@ public class Enemy : MonoBehaviour
   private float _canFireLaser = -1;
   private float _canFireMissile = -1;
   private float _sporaticMovement = -1;
+  private bool _shieldActive = false;
+  [SerializeField]
+  private GameObject _shieldVisualizer;
 
   private Transform _playerLocation;
   Vector3 rightTriangle;
@@ -66,6 +69,11 @@ public class Enemy : MonoBehaviour
 
     _canFireMissile = Time.time + _fireRate;
     _canFireLaser = Time.time + 0.5f;
+
+    if (Random.Range(0,4) == 3)
+    {
+      GiveShield();
+    }
   }
 
 
@@ -175,12 +183,19 @@ public class Enemy : MonoBehaviour
 
   public void DeathSequence()
   {
-    _enemySounds.PlayOneShot(_enemyExplosion);
-    _death = true;
-    transform.parent = null;
-    _anim.SetTrigger("OnEnemyDeath");
-    Destroy(GetComponent<Collider2D>());
-    Destroy(this.gameObject, 2.6f);
+    if (_shieldActive == true)
+    {
+      RemoveShield();
+    }
+    else
+    {
+      _enemySounds.PlayOneShot(_enemyExplosion);
+      _death = true;
+      transform.parent = null;
+      _anim.SetTrigger("OnEnemyDeath");
+      Destroy(GetComponent<Collider2D>());
+      Destroy(this.gameObject, 2.6f);
+    }
 	}
 
 
@@ -213,5 +228,18 @@ public class Enemy : MonoBehaviour
     {
       Debug.Log(other.tag);
 		}
+  }
+  private void GiveShield ()
+  {
+    if (tag == "WaveEnemy" || tag == "BasicEnemy")
+    {
+      _shieldActive = true;
+      _shieldVisualizer.SetActive(true);
+    }
+  }
+  public void RemoveShield()
+  {
+      _shieldActive = false;
+      _shieldVisualizer.SetActive(false);
   }
 }
