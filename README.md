@@ -78,7 +78,7 @@ Phase Two, Core Programming:
     Create a balanced spawning system between Enemies & pickups
     Ie. Pickups like Health should be rare, where ammo is frequent
     
-7#  Enemy Shields: Not Done
+7#  Enemy Shields: Commited
     Provide logic for some enemies to have shields
     Shields allow the enemies to take 1 free hit.
     
