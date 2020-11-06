@@ -20,7 +20,7 @@ public class Laser : MonoBehaviour
     {
       transform.Translate(new Vector3( 0, 1f, 0) * _speed * Time.deltaTime);
     }
-    if (gameObject.tag == "LaserOfEnemy")
+    else if (gameObject.tag == "LaserOfEnemy")
     {
       transform.Translate(new Vector3( 0, -1f, 0) *_speed * Time.deltaTime);
     }

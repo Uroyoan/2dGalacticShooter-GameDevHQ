@@ -82,7 +82,7 @@ Phase Two, Core Programming:
     Provide logic for some enemies to have shields
     Shields allow the enemies to take 1 free hit.
     
-8#  Aggressive Enemy Type: Not Done
+8#  Aggressive Enemy Type: Commited
     Create the functionality to support enemy aggression
     If an enemy is close to a player, the enemy will try and “ram” it.
     

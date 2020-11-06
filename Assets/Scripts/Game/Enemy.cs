@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -41,9 +40,15 @@ public class Enemy : MonoBehaviour
   private float _tangente;
   private float _radianes;
   private float _angulo;
+  private float _sideMove;
+
+  private SideDetection _sideDetect;
+  [SerializeField]
+  private GameObject _detectShips;
 
   private void Start()
   {
+    _sideDetect = _detectShips.GetComponent<SideDetection>();
     _player = GameObject.Find("Player").GetComponent<Player>();
     if (_player == null)
     {
@@ -70,13 +75,11 @@ public class Enemy : MonoBehaviour
     _canFireMissile = Time.time + _fireRate;
     _canFireLaser = Time.time + 0.5f;
 
-    if (Random.Range(0,4) == 3)
+    if (Random.Range(0, 4) == 3)
     {
       GiveShield();
     }
   }
-
-
   private void Update()
   {
     CalculateEnemyMovement();
@@ -93,6 +96,7 @@ public class Enemy : MonoBehaviour
       EnemyShootingMissile();
     }
   }
+
 
   public void EnemyShootingMissile()
   {
@@ -116,9 +120,8 @@ public class Enemy : MonoBehaviour
     _angulo = _radianes * (180 / 3.1415f);
     gameObject.transform.rotation = Quaternion.Euler(0, 0, (_angulo -= 270));
   }
-
-  void CalculateEnemyMovement ()
-  { 
+  void CalculateEnemyMovement()
+  {
     switch (gameObject.tag)
     {
       case "BasicEnemy":
@@ -156,13 +159,22 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy::CalculateEnemyMovement TAG ERROR");
         break;
     }
-      transform.Translate(_direction * _speed * Time.deltaTime);
+    if (_shieldActive == true && tag == "BasicEnemy")
+    {
+      _sideMove = _sideDetect._directiontoMove;
+      if (_sideMove != 0)
+      {
+        _direction.x = _sideMove;
+      }
+		}
+
+    transform.Translate(_direction * _speed * Time.deltaTime);
 
     // Boundries X
     if (transform.position.x >= 11f && _death == false)
     {
-      transform.position = new Vector3(-11f, Random.Range( -5f, 6f), 0);
-		}
+      transform.position = new Vector3(-11f, Random.Range(-5f, 6f), 0);
+    }
     else if (transform.position.x <= -11f && _death == false)
     {
       transform.position = new Vector3(11f, Random.Range(-5f, 6f), 0);
@@ -197,8 +209,6 @@ public class Enemy : MonoBehaviour
       Destroy(this.gameObject, 2.6f);
     }
 	}
-
-
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 
@@ -224,11 +234,8 @@ public class Enemy : MonoBehaviour
         DeathSequence();
       }
     }
-    else
-    {
-      Debug.Log(other.tag);
-		}
   }
+
   private void GiveShield ()
   {
     if (tag == "WaveEnemy" || tag == "BasicEnemy")
@@ -242,4 +249,6 @@ public class Enemy : MonoBehaviour
       _shieldActive = false;
       _shieldVisualizer.SetActive(false);
   }
+
+
 }

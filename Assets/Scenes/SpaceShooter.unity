@@ -740,6 +740,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3391950256646584807, guid: 4ca4dfe761240d04e949779969616d4d, type: 3}
+      propertyPath: _laserPrefab
+      value: 
+      objectReference: {fileID: 6625327793867369, guid: 813b871b65591b24eb8f0253478dedb6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ca4dfe761240d04e949779969616d4d, type: 3}
 --- !u!4 &1082632474 stripped
