@@ -89,7 +89,7 @@ Phase Two, Core Programming:
 9#  Smart Enemy: Commited
     Create an enemy type that knows when it’s behind the player, and fires a weapon backwards.
     
-10#  Enemy Pickups: Not Done
+10#  Enemy Pickups: Commited
      If a pickup is in front of an enemy, the enemy will fire its weapon at the pickup to destroy it before the player can get it.
      
 11#  Pickup Collect: Not Done

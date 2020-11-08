@@ -95,7 +95,8 @@ public class SpawnManager : MonoBehaviour
 		Vector3 enemySpawnPos = new Vector3(Random.Range(-9f, 9f), 7f, 0);
 		switch (enemyRandomizer)
 		{
-			case int _EnemyRarity when (_EnemyRarity > 40):
+
+			case int _EnemyRarity when (_EnemyRarity > 40 && _EnemyRarity >= 80):
 				_enemySelected = 0;
 				newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.identity);
 				newEnemy.transform.parent = _enemyContainer.transform;
@@ -119,6 +120,12 @@ public class SpawnManager : MonoBehaviour
 				_enemySelected = 2;
 				enemySpawnPos = new Vector3(-10,Random.Range(-4,6),0);
 				newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.Euler(0f, 0f, 45f));
+				newEnemy.transform.parent = _enemyContainer.transform;
+				break;
+
+			case int _EnemyRarity when (_EnemyRarity > 80):
+				_enemySelected = 3;
+				newEnemy = Instantiate(_enemyPrefabs[_enemySelected], enemySpawnPos, Quaternion.identity);
 				newEnemy.transform.parent = _enemyContainer.transform;
 				break;
 

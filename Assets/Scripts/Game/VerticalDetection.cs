@@ -7,6 +7,7 @@ public class VerticalDetection : MonoBehaviour
 
   private Transform _parentLocation;
   public float _directiontoShoot = 0;
+  public float _directiontoDestroy = 0;
   private float _resetShoot = -1;
 
   public void Start()
@@ -21,10 +22,9 @@ public class VerticalDetection : MonoBehaviour
 	{
     if (Time.time > _resetShoot)
     {
-      
       _directiontoShoot = 0;
+      _directiontoDestroy = 0;
       _resetShoot = Time.time + 2;
-      Debug.Log(_directiontoShoot);
     }
 	}
 
@@ -40,7 +40,13 @@ public class VerticalDetection : MonoBehaviour
       {
         _directiontoShoot = 1;
       }
-      Debug.Log(_directiontoShoot);
+    }
+    if (other.tag == "Powerup")
+    {
+      if (other.transform.position.y < _parentLocation.position.y)
+      {
+        _directiontoShoot = 1;
+      }
     }
   }
 }
