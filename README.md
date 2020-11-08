@@ -92,7 +92,7 @@ Phase Two, Core Programming:
 10#  Enemy Pickups: Commited
      If a pickup is in front of an enemy, the enemy will fire its weapon at the pickup to destroy it before the player can get it.
      
-11#  Pickup Collect: Not Done
+11#  Pickup Collect: Commited
      When the ‘C’ key is pressed by the Player, Pickups quickly move to the player.
      
 12#  Enemy Avoid Shot: Not Done

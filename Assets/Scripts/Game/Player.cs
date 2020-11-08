@@ -76,12 +76,10 @@ public class Player : MonoBehaviour
 	private GameObject _speedVisualizer;
 	[SerializeField]
 	private float _speedMultiplier = 2;
-
 	private bool _speedActive = false;
 
-
 	void Start()
-	{ 
+	{
 
 		_spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 		if (_spawnManager == null)
