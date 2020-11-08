@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 218390993}
   - component: {fileID: 218390994}
   m_Layer: 0
-  m_Name: ShipDetect
+  m_Name: ShipDetectHorizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,6 +173,77 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &8173497389247688265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7240156630598133188}
+  - component: {fileID: 8455096266863010564}
+  - component: {fileID: 2646954374626959176}
+  m_Layer: 0
+  m_Name: ShipDetectVertical
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7240156630598133188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173497389247688265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9106720977730808272}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8455096266863010564
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173497389247688265}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.5, y: 15}
+  m_EdgeRadius: 0
+--- !u!114 &2646954374626959176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8173497389247688265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3460cfb9de308184cb116d2d33077e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _directiontoShoot: 0
 --- !u!1 &9106720977730808276
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +278,7 @@ Transform:
   m_Children:
   - {fileID: 472259304909688309}
   - {fileID: 218390992}
+  - {fileID: 7240156630598133188}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,12 +297,14 @@ MonoBehaviour:
   _speed: 4
   _laserPrefab: {fileID: 8468847545323017688, guid: 93655c4e3799cb344a5066ae40d5b1ae, type: 3}
   _missilePrefab: {fileID: 8044056099033807951, guid: 2d04b507d6d1a32448e052e0fa2cf729, type: 3}
+  _laserBackPrefab: {fileID: 3010270689891475983, guid: c513a5dfaa2f65248b05dc494819a132, type: 3}
   _enemyExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyLockingOn: {fileID: 8300000, guid: 8265bfaeed10aa14ea4f1bec00613f34, type: 3}
   _enemyLaser: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _enemyMissile: {fileID: 8300000, guid: 2ebfa51c068a4e440a4e93acf47718f7, type: 3}
   _shieldVisualizer: {fileID: 3874080267684695257}
-  _detectShips: {fileID: 218390991}
+  _detectHorizontal: {fileID: 218390991}
+  _detectVertical: {fileID: 8173497389247688265}
 --- !u!212 &1594629818444100125
 SpriteRenderer:
   m_ObjectHideFlags: 0

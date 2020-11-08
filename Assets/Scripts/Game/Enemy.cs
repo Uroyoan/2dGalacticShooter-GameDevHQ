@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
   private GameObject _laserPrefab;
   [SerializeField]
   private GameObject _missilePrefab;
+  [SerializeField]
+  private GameObject _laserBackPrefab;
 
   private AudioSource _enemySounds;
   [SerializeField]
@@ -40,15 +42,19 @@ public class Enemy : MonoBehaviour
   private float _tangente;
   private float _radianes;
   private float _angulo;
-  private float _sideMove;
+  private float _horizontalMove;
 
-  private SideDetection _sideDetect;
+  private SideDetection _horizontalDetect;
   [SerializeField]
-  private GameObject _detectShips;
+  private GameObject _detectHorizontal;
+  private VerticalDetection _verticalDetect;
+  [SerializeField]
+  private GameObject _detectVertical;
 
   private void Start()
   {
-    _sideDetect = _detectShips.GetComponent<SideDetection>();
+    _horizontalDetect = _detectHorizontal.GetComponent<SideDetection>();
+    _verticalDetect = _detectVertical.GetComponent<VerticalDetection>();
     _player = GameObject.Find("Player").GetComponent<Player>();
     if (_player == null)
     {
@@ -95,6 +101,20 @@ public class Enemy : MonoBehaviour
       _canFireMissile = Time.time + _fireRate;
       EnemyShootingMissile();
     }
+    else if (Time.time > _canFireLaser && gameObject.tag == "SmartEnemy" && _verticalDetect._directiontoShoot == 1)
+    {
+      _fireRate = Random.Range(3f, 9f);
+      _canFireLaser = Time.time + _fireRate;
+      EnemyShootingLaser();
+      Debug.Log("Front");
+    }
+    else if (Time.time > _canFireLaser && gameObject.tag == "SmartEnemy" && _verticalDetect._directiontoShoot == -1)
+    {
+      _fireRate = Random.Range(3f, 9f);
+      _canFireLaser = Time.time + _fireRate;
+      EnemyShootingLaserBack();
+      Debug.Log("Back");
+    }
   }
 
 
@@ -106,6 +126,11 @@ public class Enemy : MonoBehaviour
   public void EnemyShootingLaser()
   {
     GameObject laserOfEnemy = Instantiate(_laserPrefab, transform.localPosition, transform.rotation);
+    _enemySounds.PlayOneShot(_enemyLaser);
+  }
+  public void EnemyShootingLaserBack()
+  {
+    GameObject laserOfEnemy = Instantiate(_laserBackPrefab, transform.localPosition, transform.rotation);
     _enemySounds.PlayOneShot(_enemyLaser);
   }
 
@@ -131,7 +156,13 @@ public class Enemy : MonoBehaviour
           _sporaticMovement = Time.time + 3f;
         }
         break;
-
+      case "SmartEnemy":
+        if (Time.time > _sporaticMovement && _death == false)
+        {
+          _direction.x = Random.Range(-1, 2);
+          _sporaticMovement = Time.time + 3f;
+        }
+        break;
       case "MissileEnemy":
         if (transform.position.y <= 4.5f)
         {
@@ -161,10 +192,10 @@ public class Enemy : MonoBehaviour
     }
     if (_shieldActive == true && tag == "BasicEnemy")
     {
-      _sideMove = _sideDetect._directiontoMove;
-      if (_sideMove != 0)
+      _horizontalMove = _horizontalDetect._directiontoMove;
+      if (_horizontalMove != 0)
       {
-        _direction.x = _sideMove;
+        _direction.x = _horizontalMove;
       }
 		}
 
@@ -221,7 +252,7 @@ public class Enemy : MonoBehaviour
         DeathSequence();
       }
     }
-    else if (other.tag == "LaserOfEnemy" || other.tag == "MissileOfEnemy" && gameObject.tag != "MissileEnemy")
+    else if (other.tag == "LaserOfEnemy" || other.tag == "MissileOfEnemy" && other.tag != "MissileEnemy" || other.tag == "LaserOfEnemyBack")
     {
       Destroy(other.gameObject);
       if (other.transform.parent != null)
@@ -236,7 +267,7 @@ public class Enemy : MonoBehaviour
     }
   }
 
-  private void GiveShield ()
+  private void GiveShield()
   {
     if (tag == "WaveEnemy" || tag == "BasicEnemy")
     {

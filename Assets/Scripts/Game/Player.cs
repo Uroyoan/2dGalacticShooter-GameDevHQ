@@ -459,7 +459,7 @@ public class Player : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "LaserOfEnemy" || other.tag == "MissileOfEnemy")
+		if (other.tag == "LaserOfEnemy" || other.tag == "MissileOfEnemy" || other.tag == "LaserOfEnemyBack")
 		{
 			Destroy(other.gameObject);
 			if (other.transform.parent != null)
@@ -469,7 +469,7 @@ public class Player : MonoBehaviour
 			Damage();
 		}
 
-		else if (other.tag == "BasicEnemy" || other.tag == "MissileEnemy" || other.tag == "WaveEnemy")
+		else if (other.tag == "BasicEnemy" || other.tag == "MissileEnemy" || other.tag == "WaveEnemy" || other.tag == "SmartEnemy")
 		{
 			other.gameObject.GetComponent<Enemy>().DeathSequence();
 			DamageCollision();

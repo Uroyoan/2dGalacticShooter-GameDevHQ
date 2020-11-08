@@ -86,7 +86,7 @@ Phase Two, Core Programming:
     Create the functionality to support enemy aggression
     If an enemy is close to a player, the enemy will try and “ram” it.
     
-9#  Smart Enemy: Not Done
+9#  Smart Enemy: Commited
     Create an enemy type that knows when it’s behind the player, and fires a weapon backwards.
     
 10#  Enemy Pickups: Not Done

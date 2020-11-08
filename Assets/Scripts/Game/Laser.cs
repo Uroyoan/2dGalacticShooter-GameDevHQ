@@ -24,6 +24,10 @@ public class Laser : MonoBehaviour
     {
       transform.Translate(new Vector3( 0, -1f, 0) *_speed * Time.deltaTime);
     }
+    else if (gameObject.tag == "LaserOfEnemyBack")
+    {
+      transform.Translate(new Vector3(0, 1f, 0) * _speed * Time.deltaTime);
+    }
 
     // Boundries y
     if (transform.position.y >= 8f)
